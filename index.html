@@ -1,0 +1,1481 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Hayabusa - Complete Documentation</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --main-color: #5d93a2;
+            --main-dark: #3d6d7a;
+            --text-color: #ffffff;
+            --bg-color: #f0f4f5;
+            --sidebar-bg: #ffffff;
+            --content-bg: #ffffff;
+            --text-dark: #23303a;
+            --text-muted: #66737d;
+            --border-color: #e1e6eb;
+            --note-bg: #e7f2f6;
+            --warn-bg: #fff7e4;
+            --danger-bg: #fdecec;
+            --code-bg: #f6f8fa;
+        }
+
+        * { box-sizing: border-box; }
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: "Roboto", Arial, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.66;
+        }
+
+        header {
+            background: var(--main-color);
+            padding: 0.75rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.14);
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1450px;
+            margin: 0 auto;
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-color);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        
+
+        #banner {
+            background: linear-gradient(135deg, var(--main-color) 0%, var(--main-dark) 100%);
+            color: #fff;
+            padding: 2.25rem 0;
+            text-align: center;
+        }
+
+        #banner h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        #banner p {
+            margin: 0.6rem auto 0;
+            max-width: 1000px;
+            opacity: 0.96;
+        }
+
+        .docs-wrapper {
+            display: flex;
+            gap: 1.6rem;
+            padding: 1.5rem 0 2rem;
+        }
+
+        .docs-sidebar {
+            width: 330px;
+            flex-shrink: 0;
+            background: var(--sidebar-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 1.1rem;
+            position: sticky;
+            top: 86px;
+            max-height: calc(100vh - 110px);
+            overflow: auto;
+        }
+
+        .docs-sidebar h3 {
+            margin: 0 0 0.75rem;
+            font-size: 1.06rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.58rem 0.7rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.65rem;
+        }
+
+        .nav-group-title {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin: 0.85rem 0 0.35rem;
+            font-weight: 700;
+        }
+
+        .nav-item {
+            display: block;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            padding: 0.42rem 0.58rem;
+            border-radius: 8px;
+            margin-bottom: 0.14rem;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(93, 147, 162, 0.14);
+            color: var(--main-dark);
+        }
+
+        .docs-content {
+            flex: 1;
+            background: var(--content-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 2rem;
+        }
+
+        .doc-section {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.2rem;
+        }
+        .doc-section.hidden { display: none; }
+
+        .doc-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 1.9rem;
+            color: var(--text-dark);
+        }
+
+        h3 {
+            margin: 0.5rem 0 0.5rem;
+            font-size: 1.4rem;
+            color: var(--main-dark);
+        }
+
+        h4 {
+            margin: 0.8rem 0 0.3rem;
+            font-size: 1.07rem;
+            color: var(--text-dark);
+        }
+
+        p {
+            margin: 0.45rem 0;
+        }
+
+        ul, ol {
+            margin: 0.5rem 0 0.7rem 1.25rem;
+        }
+
+        li { margin: 0.25rem 0; }
+
+        code {
+            font-family: "JetBrains Mono", monospace;
+            background: var(--code-bg);
+            border: 1px solid #d9e1e7;
+            border-radius: 6px;
+            padding: 0.08rem 0.35rem;
+            font-size: 0.92em;
+        }
+
+        .box {
+            border-radius: 8px;
+            padding: 0.8rem 0.9rem;
+            margin: 0.75rem 0;
+        }
+
+        .box.note {
+            background: var(--note-bg);
+            border-left: 4px solid #5d93a2;
+        }
+
+        .box.warn {
+            background: var(--warn-bg);
+            border-left: 4px solid #d6a426;
+        }
+
+        .box.danger {
+            background: var(--danger-bg);
+            border-left: 4px solid #d9534f;
+        }
+
+        .toc-sub {
+            margin-left: 0.7rem;
+            border-left: 2px solid #ecf0f3;
+            padding-left: 0.55rem;
+        }
+
+        .notice-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.92rem;
+            margin: 0.75rem 0 1rem;
+        }
+
+        .notice-table th,
+        .notice-table td {
+            text-align: left;
+            padding: 0.5rem 0.65rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .notice-table th {
+            color: var(--main-dark);
+            font-weight: 600;
+        }
+
+        .notice-heading {
+            margin-top: 1.35rem;
+            margin-bottom: 0.35rem;
+            color: var(--main-dark);
+        }
+
+        .notice-lead {
+            margin-bottom: 1rem;
+        }
+
+        .notice-disclaimer {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 1.25rem;
+        }
+
+        .docs-download-btn {
+            display: inline-block;
+            margin: 0.5rem 0 1rem;
+            padding: 0.55rem 1rem;
+            background: var(--main-color);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .docs-download-btn:hover {
+            background: var(--main-dark);
+        }
+
+        #footer-wrapper {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 1rem 0 2rem;
+        }
+
+        @media (max-width: 1020px) {
+            .docs-wrapper { flex-direction: column; }
+            .docs-sidebar { width: 100%; position: static; max-height: none; }
+            .docs-content { padding: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="container top-nav"><a href="./" class="logo">Hayabusa Docs</a><span style="color:#fff;opacity:.9;font-size:.95rem">Operator Manual</span></div>
+</header>
+
+
+<section id="banner">
+    <div class="container">
+        <h1><i class="fa fa-book"></i> Hayabusa Operator Manual</h1>
+        <p>A practical guide for individuals and organizations — how Hayabusa works, how to get started, and how each surface fits together. Built around commonly used open-source tools, with security and education in mind.</p>
+    </div>
+</section>
+
+<div class="container docs-wrapper">
+    <aside class="docs-sidebar">
+        <h3><i class="fa fa-compass"></i> Contents</h3>
+        <input id="searchDocs" class="search-input" placeholder="Filter topics..." />
+
+        <div class="nav-group-title">Start Here</div>
+        <a class="nav-item active" href="#intro">1. What Hayabusa Is</a>
+        <a class="nav-item" href="#mental-model">2. Mental Model</a>
+        <a class="nav-item" href="#onboarding">3. First-Time Onboarding</a>
+
+        <div class="nav-group-title">Main Product Surfaces</div>
+        <a class="nav-item" href="#workstations">4. Workstations</a>
+        <div class="toc-sub">
+            <a class="nav-item" href="#workstation-views">4.1 Views Menu, Telemetry, and Map Modes</a>
+            <a class="nav-item" href="#devops-iac-workspace">4.2 Ansible &amp; OpenTofu Workspace</a>
+            <a class="nav-item" href="#openplc-workspace">4.3 OpenPLC Workspace Directory</a>
+        </div>
+        <a class="nav-item" href="#fleet">5. Fleet</a>
+        <div class="toc-sub">
+            <a class="nav-item" href="#guacamole-console">5.1 Apache Guacamole Console</a>
+        </div>
+        <a class="nav-item" href="#networking">6. Networking</a>
+        <div class="toc-sub">
+            <a class="nav-item" href="#networking-overlay">6.1 WireGuard + Headscale</a>
+            <a class="nav-item" href="#networking-ipsec">6.2 IPsec</a>
+            <a class="nav-item" href="#networking-tenant">6.3 Tenant VPC / Subnet Allocation</a>
+        </div>
+        <a class="nav-item" href="#ztp">7. Zero Touch Provisioning</a>
+        <div class="toc-sub">
+            <a class="nav-item" href="#image-nest">7.1 Image Nest (Windows &amp; Linux media)</a>
+        </div>
+        <a class="nav-item" href="#security">8. Security and Pentesting</a>
+        <a class="nav-item" href="#integrations">9. Integrations</a>
+        <a class="nav-item" href="#ai">10. AI and User Keys</a>
+
+        <div class="nav-group-title">Observability and Control</div>
+        <a class="nav-item" href="#observability-stack">11. Grafana, Prometheus, and InfluxDB</a>
+        <a class="nav-item" href="#scada-plc-robotics">12. SCADA, PLC, ROS2, and NVIDIA Isaac</a>
+
+        <div class="nav-group-title">Identity and Governance</div>
+        <a class="nav-item" href="#profile">13. Profile</a>
+        <a class="nav-item" href="#orgs">14. Organizations</a>
+        <a class="nav-item" href="#admin">15. Administration</a>
+        <div class="toc-sub">
+            <a class="nav-item" href="#admin-safety">15.1 Safety Controls</a>
+            <a class="nav-item" href="#admin-identity">15.2 Manual Identity Controls</a>
+            <a class="nav-item" href="#admin-observability">15.3 Logs and Operational Visibility</a>
+        </div>
+
+        <div class="nav-group-title">Operations</div>
+        <a class="nav-item" href="#architecture">16. Architecture and Runtime</a>
+        <a class="nav-item" href="#state">17. Persistence and State</a>
+        <a class="nav-item" href="#runbooks">18. Common Runbooks</a>
+        <a class="nav-item" href="#troubleshooting">19. Troubleshooting</a>
+        <a class="nav-item" href="#best-practices">20. Best Practices</a>
+        <a class="nav-item" href="#faq">21. FAQ</a>
+
+        <div class="nav-group-title">Derivatives &amp; Reference</div>
+        <a class="nav-item" href="#derivatives">22. Derivatives</a>
+        <a class="nav-item" href="#about">23. About</a>
+        <a class="nav-item" href="#open-source-notices">24. Open Source &amp; Third-Party Notices</a>
+    </aside>
+
+    <main class="docs-content">
+                <section id="intro" class="doc-section">
+            <h2>1) What Hayabusa Is</h2>
+            <p>Hayabusa is designed to be a <strong>command center for infrastructure</strong>. Whether you are an individual or an organization, Hayabusa is built to cater to both. Create or configure routers, switches, virtual machines, physical servers, containers, applications, and more. Communicate with devices and preserve their configurations as text files over the internet — then monitor security and performance afterward.</p>
+            <p>With <strong>security</strong>, <strong>simplicity</strong>, and <strong>education</strong> in mind, Hayabusa aims to simplify your infrastructure and teach along the way. It may look like a program with many features to learn, but it is built on commonly used open-source tools, with documentation here to help you start quickly. In fact, there may be features in Hayabusa that you never need to use — and that is by design.</p>
+            <div class="box note"><strong>Important distinction:</strong> this <code>/docs</code> page is the product manual (concepts and workflows). API route browsing lives on <code>/api</code>. Deep architecture notes for operators also live in the repo under <code>docs/</code> (for example Image Nest and ZTP/controller architecture).</div>
+        </section>
+
+        <section id="mental-model" class="doc-section">
+            <h3>2) Mental Model</h3>
+            <p>Hayabusa can be simplified to a few layers:</p>
+            <ul>
+                <li><strong>Application:</strong> the program itself — UI, APIs, Ansible/OpenTofu, dashboards, and helpers doing the work.</li>
+                <li><strong>Network access:</strong> the physical means of connecting — cables, NICs, Ethernet ports, radios.</li>
+                <li><strong>Transport:</strong> protocols that move data. The two major ones are <strong>TCP</strong> and <strong>UDP</strong>, each suited to different programs and reliability needs.</li>
+                <li><strong>Internet:</strong> connecting one host to another with IP addressing. When hosts connect across the world, that is the internet as we know it.</li>
+            </ul>
+            <p>You will use all of these in one way or another. Network access, transport, and internet all involve data moving from one device to another. Those three layers form your connection to Hayabusa and Hayabusa’s ability to talk to your computers, routers, switches, and controllers. The application layer does the work before communicating out through the others.</p>
+            <p>In basic terms, this is how all parts of the platform communicate. Even advanced areas — security monitoring, telemetry, drone control, SCADA, and pentesting — combine these same layers.</p>
+            <div class="box note"><strong>When something feels confusing:</strong> ask which layer failed first — application logic, reachability (network access), protocol/session (transport), or addressing/routing (internet). That narrows root cause quickly.</div>
+        </section>
+
+        <section id="onboarding" class="doc-section">
+            <h3>3) First-Time Onboarding</h3>
+            <h4>Hayabusa Core</h4>
+            <p><strong>Hayabusa Core</strong> is the publicly accessible portion of Hayabusa — the brain and middleman for nearly every action. Anyone can sign in and view their networks and hosts, or those of an organization they belong to. Without Core there is no development, security, or other major function.</p>
+            <p>If you are reading this, you have likely already signed in. Hayabusa currently supports <strong>Google</strong>, <strong>Slack</strong>, <strong>Discord</strong>, and <strong>Microsoft</strong> logins. That is intentional: it serves users from many platforms and avoids unnecessary risk and liability from storing password-based user credentials on our side.</p>
+
+            <h4>Walkthrough: map → DevOps → Fleet console</h4>
+            <ol>
+                <li>Click <strong>Foundry</strong> in the top navigation, then <strong>configure virtual workstations</strong>. That opens the <strong>Workstations</strong> page — a map of your infrastructure. On a Hayabusa instance on your LAN, discovery can automatically map computers, routers, and switches on the local network.</li>
+                <li>Open the left side navigation (available on most pages) and click <strong>DevOps</strong>. That takes you toward infrastructure development and the <strong>Fleet</strong> page — open <strong>Fleet</strong>.</li>
+                <li>On Fleet, the left column lists identified hosts. For first login that may look sparse; the important surface for most users is the <strong>console in the center</strong>.</li>
+            </ol>
+            <p>The console is organized by use-case categories. Its heart is <strong>Ansible</strong> and <strong>OpenTofu</strong> — two major open-source DevOps tools:</p>
+            <ul>
+                <li><strong>OpenTofu</strong> — declarative infrastructure: “you <em>must</em> look like this; if apply cannot succeed, roll back.”</li>
+                <li><strong>Ansible</strong> — procedural configuration: “you <em>should</em> do/have/include this; do not roll everything back on a single failure.”</li>
+            </ul>
+            <p>You write text files that define how infrastructure is created and modified. Those programs are explained further below; for onboarding, know that this is where you define intent before changes run.</p>
+            <p>To the right, another organization of your networks appears — useful when a controller spans multiple separated networks. You can list hosts by network, zoom the map, and see last-known OpenTofu configuration where available.</p>
+            <p>Below, a draggable panel embeds the Workstations map so you can watch infrastructure as you edit. In some cases workspace edits show up in near real time.</p>
+            <div class="box warn"><strong>Essentials:</strong> understanding Ansible and OpenTofu through Hayabusa is the backbone of nearly everything else. Use the AI chat assistant to help draft playbooks — for speed and fewer errors — then keep reading the sections that match your role.</div>
+            <div class="box note"><strong>Also know:</strong> site LAN DHCP/PXE and Image Nest live on a <strong>Hayabusa Controller</strong> on your network. Core orchestrates claim, GitOps, and OpenTofu/Ansible after LAN Approve. You do not need a controller for the first Core walkthrough above, but you will for ZTP and Nest.</div>
+        </section>
+
+        <section id="workstations" class="doc-section">
+            <h3>4) Workstations</h3>
+            <p>Open <strong>Foundry → configure virtual workstations</strong>. Workstations is a clearer, less-cluttered view of mapped infrastructure — a bird’s-eye map for telemetry, planning, and specialized views without the full Fleet console chrome.</p>
+            <p>During onboarding you saw Fleet as the DevOps command surface. Workstations is the companion map: same world of hosts, focused on visibility and modes rather than every craft action at once.</p>
+            <h4>How to use it effectively</h4>
+            <ul>
+                <li>Treat the map/diagram as operational context, not the sole source of truth.</li>
+                <li>Confirm host identity with multiple fields (IP, hostname, type, ownership).</li>
+                <li>Refresh host data before sensitive actions.</li>
+            </ul>
+            <p>The telemetry drawer supports per-host or per-link troubleshooting: freshness, RTT/loss/jitter, top talkers, and threshold alerts. Set thresholds per environment (lab, staging, production) rather than one global default.</p>
+            <p>Path Trace and Baseline Compare help rapid triage: trace checks likely forwarding path; baseline compare shows topology drift in the current window. Baseline compare is in-memory for speed; durable history can be added later if compliance needs it.</p>
+        </section>
+
+        <section id="workstation-views" class="doc-section">
+            <h4>4.1) Views Menu, Telemetry, and Map Modes</h4>
+            <p>Click <strong>Views</strong> (top-left of the map) to switch modes. The telemetry pill stays centered so health stays visible. Available views include: <strong>underlay</strong>, <strong>overlay</strong>, <strong>observability</strong>, <strong>diagram</strong>, <strong>robotics viewer</strong>, <strong>NVIDIA ISAAC</strong>, <strong>disasters</strong>, <strong>weather</strong>, <strong>SCADA</strong>, and <strong>air traffic</strong>. That list is long on purpose — enterprise teams split roles, and you may never need every view.</p>
+
+            <h4>Diagram</h4>
+            <p>Diagram is a planning canvas for current infrastructure and future changes with others. Add candidate servers, networks, and more; export and later import XML when you need to save work. If it looks familiar, you have likely used <strong>draw.io</strong> / diagrams.net — this uses that open-source lineage. Either tool works for planning and visualization.</p>
+
+            <h4>Overlay</h4>
+            <p>Overlay shows how regional hub connections relate to the central command path — the control plane for sites and branches. In an overlay network you reach infrastructure through a control node (the “puppet master”). On <code>https://hayabusa.tracedroute.net</code> you are on the central command server. That sits upstream of a regional hub or self-hosted Core/controller on a LAN, which in turn sits upstream of the devices you create and configure.</p>
+            <p><strong>Hierarchy (top → bottom):</strong> central server → regional hub / self-hosted instance → devices under management.</p>
+
+            <h4>Underlay</h4>
+            <p>Underlay is the view of links between switches, routers, and hosts on a LAN. Use it to troubleshoot performance — for example, a PC with buffering while streaming: compare bandwidth or errors on that host’s switch link versus peers, or spot a misconfigured switch.</p>
+
+            <h4>Observability (map view)</h4>
+            <p>Shows graphs of metrics scraped from infrastructure once collectors and dashboards are in place (often with InfluxDB/Grafana). You typically install or enable scrape/agent pieces as you configure hosts — see Grafana / Prometheus / InfluxDB below.</p>
+
+            <h4>Robotics Viewer</h4>
+            <p>Uses MAVLink, MAVROS, MAVSDK, and ROS2 for robotics control and programming. Enter vehicle and camera IPs where applicable, plan flights, and watch vehicles on the map. Map controls support pan-to-drone, destinations, waypoints, and toggles for air vehicles, fleets, simulation, and saved routes. Deep detail is later in this manual under SCADA / PLC / ROS2.</p>
+
+            <h4>Other views (quick map)</h4>
+            <ul>
+                <li><strong>World Map / geographic context</strong> — distributed fleet awareness.</li>
+                <li><strong>SCADA</strong> — industrial HMI/controller context (FUXA).</li>
+                <li><strong>NVIDIA ISAAC</strong> — remote connector to your own GPU Isaac deployment.</li>
+                <li><strong>Disasters / weather / air traffic</strong> — situational layers for operators who need them.</li>
+            </ul>
+            <h4>Recommended operator flow</h4>
+            <ol>
+                <li>Start in World Map or Diagram to find the host or system.</li>
+                <li>Use Overlay for application/control-path impact.</li>
+                <li>Use Underlay when loss, jitter, or L2/L3 adjacency needs explaining.</li>
+                <li>Open Observability, Robotics, SCADA, or ISAAC only when that domain is the task.</li>
+            </ol>
+            <div class="box note"><strong>Scope:</strong> Workstations respects user and organization context. Confirm the selected organization before provisioning, file, PLC, or console actions.</div>
+        </section>
+
+        <section id="devops-iac-workspace" class="doc-section">
+            <h4>4.2) Ansible &amp; OpenTofu Workspace</h4>
+            <p>The Ansible &amp; OpenTofu workspace is the tenant-scoped infrastructure-as-code area from Workstations and Fleet. Personal and organization workspaces are separated; organization write access depends on membership and permissions.</p>
+            <p>Recall the onboarding distinction: OpenTofu is strongly declarative (“must”); Ansible is procedural (“should”). Both are edited as text under your workspace and run through Hayabusa’s approved workflows — ideally drafted with the AI assistant, then reviewed by you.</p>
+            <h4>Console View</h4>
+            <p>Command-oriented: edit files as text, run approved Ansible/OpenTofu workflows, sync OpenTofu state into inventory, and review output. Best for repeatable operations and exact commands.</p>
+            <h4>Graphical View</h4>
+            <p>A FileZilla-style manager for the same workspace — same tenant-scoped APIs as the console:</p>
+            <ul>
+                <li><strong>Path bar</strong> — current path and quick navigation.</li>
+                <li><strong>Left tree</strong> — folders such as <code>ansible/</code>, <code>OpenTofu/</code>, <code>ztp/</code>, <code>bare-metal-ztp/</code>, and <code>openPLC/</code>.</li>
+                <li><strong>Right list</strong> — name, type, size, modified time.</li>
+                <li><strong>Preview/editor</strong> — inspect and edit text files in-browser.</li>
+                <li><strong>Transfer area</strong> — upload/move results and recent status.</li>
+            </ul>
+            <h4>Graphical file actions</h4>
+            <ul>
+                <li>Create folders and files; preview/edit/save text; rename; delete (with write access).</li>
+                <li>Upload by dragging from the desktop; move by dragging onto another folder.</li>
+            </ul>
+            <h4>Security model</h4>
+            <p>Workspace APIs validate paths server-side. Absolute paths, traversal, NUL bytes, and symlink escapes are rejected. Uploads are size-limited and written only under the tenant root. Read-only org members can inspect but not mutate.</p>
+            <p>Relevant APIs include <code>/api/devops-iac/ls</code>, <code>/api/devops-iac/file</code>, <code>/api/devops-iac/mkdir</code>, <code>/api/devops-iac/mv</code>, <code>/api/devops-iac/rm</code>, <code>/api/devops-iac/upload</code>, <code>/api/devops-iac/run</code>, and OpenTofu state sync endpoints.</p>
+            <div class="box warn"><strong>Operational warning:</strong> graphical actions are real workspace mutations. Confirm user/org context before uploads, moves, deletes, or OpenTofu sync.</div>
+        </section>
+
+                <section id="openplc-workspace" class="doc-section">
+            <h4>4.3) OpenPLC Workspace Directory</h4>
+            <p>Each personal and organization workspace includes an <code>openPLC/</code> tree — a first-class home for PLC projects beside Ansible and OpenTofu. Use it to keep IEC programs, libraries, and generated artifacts under the same tenant scope as your IaC.</p>
+            <h4>Directory layout</h4>
+            <ul>
+                <li><code>openPLC/programs/</code> — IEC 61131-3 projects, Structured Text, ladder/exports, controller sources.</li>
+                <li><code>openPLC/generated/</code> — generated exports and build artifacts.</li>
+                <li><code>openPLC/libraries/</code> — reusable function blocks and support libraries.</li>
+                <li><code>openPLC/README.md</code> — tenant-local instructions seeded by Hayabusa.</li>
+            </ul>
+            <h4>OpenPLC Editor in the container</h4>
+            <p>OpenPLC Editor is installed under <code>/opt/openplc-editor</code> with launcher <code>/usr/local/bin/openplc-editor</code>; MatIEC is under <code>/opt/openplc-editor/matiec</code>. Edit in Graphical View, then use console/container workflows to open, generate, or export as your environment requires.</p>
+            <h4>Tenant separation</h4>
+            <p><code>openPLC/</code> lives inside the resolved workspace root — personal and organization trees do not mix unless you deliberately copy files. Pair with the PLC Viewer (§12) for live reads/writes; keep write approval discipline the same as any other guarded control action.</p>
+        </section>
+
+                <section id="fleet" class="doc-section">
+            <h3>5) Fleet</h3>
+            <p>Fleet is the multi-host operations surface — answering “which systems?” rather than “this one system.” Use it for rollout groups, online/offline posture across many nodes, inventory anomalies, Incoming/ZTP claim, and the central Ansible/OpenTofu console from onboarding.</p>
+            <h4>Layout</h4>
+            <ul>
+                <li><strong>Left column</strong> — discovered, claimed, or pending hosts (and Incoming when a controller is connected).</li>
+                <li><strong>Center console</strong> — categorized craft workspace (Ansible, OpenTofu, ZTP trees, and related tools).</li>
+                <li><strong>Right / map</strong> — network-oriented layout, zoom, and last-known OpenTofu configuration where available.</li>
+            </ul>
+            <h4>Best use cases</h4>
+            <ul>
+                <li>Segmenting rollout groups and comparing posture across many nodes.</li>
+                <li>Claiming Incoming devices after controller discovery / ZTP seek.</li>
+                <li>Opening a host console (Guacamole) or PLC Viewer without leaving Fleet.</li>
+                <li>Running approved Ansible/OpenTofu jobs against scoped targets after LAN Approve when a controller holds secrets/media.</li>
+            </ul>
+            <div class="box note"><strong>Relationship to Workstations:</strong> Workstations is the clearer map-first view; Fleet is the craft and inventory command surface. Use both — map for orientation, Fleet for action.</div>
+        </section>
+
+                <section id="guacamole-console" class="doc-section">
+            <h4>5.1) Apache Guacamole Console</h4>
+            <p>Hayabusa uses Apache Guacamole for browser-based remote access (SSH/RDP/VNC as configured). From Fleet (and Workstations host flows), open the host console and use the <strong>Apache Guacamole</strong> tab; switch to <strong>PLC Viewer</strong> for protocol-level reads or authorized writes.</p>
+            <h4>How to use it</h4>
+            <ol>
+                <li>Open <strong>Fleet</strong> and select the target host.</li>
+                <li>Open the host console action.</li>
+                <li>Use <strong>Apache Guacamole</strong> for the remote session.</li>
+                <li>Switch to <strong>PLC Viewer</strong> when you need controller protocol work.</li>
+            </ol>
+            <h4>Runtime pieces</h4>
+            <ul>
+                <li><code>guacd</code> — Guacamole proxy daemon.</li>
+                <li><code>guacamole</code> — web client service.</li>
+                <li><code>guacamole-db</code> — PostgreSQL store initialized by Hayabusa SQL.</li>
+                <li><code>/api/console/guacamole/status</code> — UI status endpoint.</li>
+            </ul>
+            <p>On typical site installs, Guacamole runs beside the <strong>Hayabusa Controller</strong> stack so browser sessions reach LAN hosts without exposing every management port to the public internet.</p>
+            <div class="box warn"><strong>Credential handling:</strong> supply Guacamole and DB secrets via runtime environment — do not bake production credentials into images. Prefer least-privilege service accounts for SSH/RDP targets.</div>
+        </section>
+
+                <section id="networking" class="doc-section">
+            <h3>6) Networking</h3>
+            <p>Networking is where overlay, tunnel, and tenant isolation are monitored and controlled — the <strong>transport</strong> and <strong>internet</strong> layers from the mental model (§2), made operable in the UI.</p>
+            <p>When diagnosing incidents, prioritize: <strong>identity scope</strong> → <strong>tunnel status</strong> → <strong>route/selector correctness</strong> → <strong>host reachability and latency</strong>. That order prevents false conclusions from stale or out-of-scope sessions.</p>
+            <h4>Subsections in this category</h4>
+            <ul>
+                <li><a href="#networking-overlay">6.1 WireGuard + Headscale</a> — mesh overlay.</li>
+                <li><a href="#networking-ipsec">6.2 IPsec</a> — classic/interop tunnels.</li>
+                <li><a href="#networking-tenant">6.3 Tenant VPC / Subnet Allocation</a> — private CIDR ownership.</li>
+            </ul>
+        </section>
+
+                <section id="networking-overlay" class="doc-section">
+            <h4>6.1) WireGuard + Headscale</h4>
+            <p><strong>WireGuard</strong> provides encrypted transport. <strong>Headscale</strong> provides self-hosted coordination and identity for mesh networks. Together they support operator-managed overlay connectivity between Core, regional hubs/controllers, and managed devices.</p>
+            <p>Interpret overlay status with underlay evidence. A tunnel can be “up” while service quality degrades due to jitter or loss beneath it — use map overlay health coloring and link telemetry together before changing peer config.</p>
+            <h4>Operator checklist</h4>
+            <ol>
+                <li>Check server/client (or Headscale) status before troubleshooting endpoints.</li>
+                <li>Confirm tenant / namespace assignment matches the intended organization or user scope.</li>
+                <li>Verify expected peers appear in host/peer lists.</li>
+                <li>If quality is bad but the tunnel is up, switch to Underlay (Workstations) and Path Trace before rotating keys.</li>
+            </ol>
+            <div class="box note"><strong>Mental model:</strong> WireGuard+Headscale sit in the transport/internet layers — they move application traffic securely; they do not replace correct addressing or L2/L3 health on the underlay.</div>
+        </section>
+
+                <section id="networking-ipsec" class="doc-section">
+            <h4>6.2) IPsec</h4>
+            <p>IPsec supports tunnel scenarios that need selector-based or interoperability-oriented connectivity (site-to-site, partner networks). It often complements mesh overlay workflows rather than replacing them.</p>
+            <p>Validate three dimensions independently: <strong>IKE/session establishment</strong>, <strong>selector correctness</strong>, and <strong>application reachability</strong>. Successful IKE does not guarantee selector accuracy; selector accuracy does not guarantee firewall allowance.</p>
+            <div class="box warn"><strong>Safety note:</strong> broad selectors or overlapping CIDRs can create hard-to-debug traffic leaks. Keep selectors explicit and owned. Document who owns each tunnel and what CIDRs it carries.</div>
+            <h4>When to prefer IPsec vs WireGuard mesh</h4>
+            <ul>
+                <li><strong>IPsec</strong> — peer requires classic IPsec/IKEv2, strict selectors, or existing enterprise VPN standards.</li>
+                <li><strong>WireGuard + Headscale</strong> — operator-managed mesh, modern clients, simpler key/identity coordination inside Hayabusa.</li>
+            </ul>
+        </section>
+
+                <section id="networking-tenant" class="doc-section">
+            <h4>6.3) Tenant VPC / Subnet Allocation</h4>
+            <p>Hayabusa can allocate tenant private address realms from a configured pool and persist assignments. That creates deterministic ownership of private CIDR space per user or organization so overlays and tunnels do not accidentally collide.</p>
+            <h4>How to operate safely</h4>
+            <ul>
+                <li>Validate proposed CIDRs before assignment (size, RFC1918 fit, no overlap).</li>
+                <li>Avoid overlap with existing tenant realms and with underlay LAN ranges you still need to reach.</li>
+                <li>Document ownership of each assigned block (org/user, purpose, date).</li>
+                <li>After change, verify routing/overlay peers still reach expected hosts.</li>
+            </ul>
+            <div class="box note"><strong>Tip:</strong> treat tenant allocation as control-plane state. Changing a live tenant CIDR can strand tunnels — plan a migration window.</div>
+        </section>
+
+        <section id="ztp" class="doc-section">
+            <h3>7) Zero Touch Provisioning (ZTP)</h3>
+            <p>ZTP automates first contact so blank or factory devices enter service with a consistent baseline — DHCP/PXE on the site LAN, config fetch from the controller, then claim and follow-on OpenTofu/Ansible from Core.</p>
+            <p>When DHCP controls appear in the UI, treat enablement as a controlled network event. An unintended DHCP server can conflict with existing address assignment on a shared segment. Use a change window and confirm you own the broadcast domain first.</p>
+            <h4>Recommended flow</h4>
+            <ol>
+                <li>Prepare baseline templates (and Image Nest media if you need Windows/Linux install artifacts).</li>
+                <li>Review pending/discovered devices in Fleet Incoming before claim.</li>
+                <li>Apply provisioning and validate post-state.</li>
+                <li>Record deviations and update templates.</li>
+            </ol>
+            <div class="box note"><strong>Where DHCP/PXE runs:</strong> site LAN DHCP and <code>/ztp/fetch</code> live on the <strong>Hayabusa Controller</strong>. Hayabusa Core orchestrates claim, GitOps, and OpenTofu/Ansible after LAN Approve — it does not bind customer-LAN DHCP on the hub. With a controller branch selected, the UI rewrites ZTP/DHCP API calls to <code>/api/my-controller/ztp/*</code> (status, config, interfaces, leases, start/stop, pending-devices).</div>
+        </section>
+
+        <section id="image-nest" class="doc-section">
+            <h3>7.1) Image Nest — Windows &amp; Linux install media</h3>
+            <p><strong>Image Nest</strong> is a Controller feature (open it from the connected controller UI at <code>/image-nest</code>). You bring a legal Windows or Linux ISO; Hayabusa never redistributes Microsoft media. Nest banks dated artifacts and publishes hydrate placeholders such as <code>&lt;&lt;IMAGE_NEST:latest-win11-stripped&gt;&gt;</code> for OpenTofu/Ansible on LAN Approve.</p>
+
+            <h4>Deploy targets on the Image Nest page</h4>
+            <p>Works for <strong>Windows and Linux</strong> ISOs. Pick a target first — the banked file type changes with the target:</p>
+            <table class="notice-table">
+                <thead>
+                    <tr><th>Target</th><th>Windows output</th><th>Linux output</th><th>Use for</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Bare metal</strong></td>
+                        <td>Bootable ISO</td>
+                        <td>Bootable ISO</td>
+                        <td>ZTP / PXE / USB physical install</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hypervisor media</strong></td>
+                        <td><code>install.wim</code> (+ empty qcow2 stub)</td>
+                        <td>Banked ISO</td>
+                        <td>OpenTofu / KVM attach as install media</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bootable disk</strong></td>
+                        <td>virt-install → bootable <code>qcow2</code> (needs KVM tools on controller)</td>
+                        <td>ISO + qcow2 stub</td>
+                        <td>Proxmox / KVM guest disk</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hyper-V</strong></td>
+                        <td>Bootable convert → <code>VHDX</code></td>
+                        <td>ISO + empty VHDX stub</td>
+                        <td>Hyper-V guests</td>
+                    </tr>
+                    <tr>
+                        <td><strong>VMware</strong></td>
+                        <td>Bootable convert → <code>VMDK</code></td>
+                        <td>ISO + empty VMDK stub</td>
+                        <td>VMware guests</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Buttons and actions</h4>
+            <ul>
+                <li><strong>Strip &amp; bank / Full bank</strong> — bake for the selected deploy target (optional package strip).</li>
+                <li><strong>Publish ISO as-is</strong> — bank the uploaded medium for bare metal without a strip bake.</li>
+                <li><strong>Guest initial config</strong> — hostname, admin user, password, disk size for Windows Autounattend when baking Bootable / Hyper-V / VMware disks.</li>
+                <li><strong>→ VHDX / → VMDK</strong> on a bank row — convert an existing banked disk with <code>qemu-img</code>.</li>
+                <li><strong>Hayabusa hand-off</strong> — write tfvars for Core; the controller never runs OpenTofu.</li>
+            </ul>
+
+            <h4>How this ties to OpenTofu / ZTP</h4>
+            <ol>
+                <li>Upload ISO on the controller Image Nest page.</li>
+                <li>Choose target → Strip/Full bank (or Publish ISO as-is).</li>
+                <li>In OpenTofu/Ansible commit placeholders only, e.g. <code>source_image = "&lt;&lt;IMAGE_NEST:latest-win11-bootable&gt;&gt;"</code>.</li>
+                <li>Queue the job from Hayabusa; on <strong>LAN Approve</strong> the controller hydrates nest refs (same pattern as secrets).</li>
+                <li>Core applies OpenTofu/Ansible with resolved paths.</li>
+            </ol>
+            <div class="box warn"><strong>Empty disk stubs are not a runnable OS.</strong> A blank qcow2/VHDX/VMDK is a container waiting for install. A <em>bootable</em> Windows qcow2 requires virt-install (or a separately prepared disk). Linux disk targets today bank the ISO plus an empty platform-native stub unless you convert a real disk later.</div>
+            <div class="box note"><strong>Proven lab path:</strong> bootable Win11 qcow2 hydrated from the controller into Proxmox at OpenTofu create (no ISO staged on Proxmox first). See controller Image Nest bank aliases such as <code>latest-win11-hypervisor</code> / <code>latest-win11-bootable</code>.</div>
+        </section>
+
+                <section id="security" class="doc-section">
+            <h3>8) Security and Pentesting</h3>
+            <p>Security workflows in Hayabusa support authorized assessment and risk discovery — not unscoped scanning of networks you do not own. Pair every scan or SECops playbook with scope control, approval, and a remediation path.</p>
+            <h4>What lives where</h4>
+            <ul>
+                <li><strong>Fleet / DevOps workspace</strong> — SECops Ansible trees and related playbooks under your tenant workspace (often with packaged defaults that GitOps does not overwrite).</li>
+                <li><strong>Controller</strong> — site-local secrets and LAN Approve for jobs that need vault material or Image Nest media.</li>
+                <li><strong>Observability / alerts</strong> — evidence after changes; optional AI suggest-from-alert paths when enabled.</li>
+            </ul>
+            <h4>Responsible workflow</h4>
+            <ol>
+                <li>Define scope and written approval (systems, CIDRs, time window).</li>
+                <li>Run low-impact reconnaissance first.</li>
+                <li>Escalate to active checks only where authorized.</li>
+                <li>Convert findings to tracked remediation tasks; re-test after fixes.</li>
+            </ol>
+            <div class="box danger"><strong>Legal boundary:</strong> only assess systems you own or are explicitly authorized to test. Unauthorized scanning can be unlawful and can disrupt production.</div>
+        </section>
+
+                <section id="integrations" class="doc-section">
+            <h3>9) Integrations</h3>
+            <p>Integrations connect Hayabusa to outside services and workflows — chat login providers, Git (GitOps), observability backends, Guacamole, vendor ZTP, and optional AI providers. Every integration should have an owner, expected behavior, and a rollback plan.</p>
+            <div class="box note"><strong>Integration Builder ↔ controller:</strong> webhooks, custom builder apps, and automation jobs save on Core and sync to the selected controller with <code>POST /api/my-controller/integrations/sync</code> (pull then push of <code>integrations.bundle.*</code>). The Integrations UI Sync button uses that path; builder app upserts also best-effort push so the site appliance keeps the same bundle.</div>
+            <h4>Common integration families</h4>
+            <ul>
+                <li><strong>Identity</strong> — Google, Slack, Discord, Microsoft sign-in (Core).</li>
+                <li><strong>GitOps</strong> — GitHub/GitLab as source of truth for Advanced controller workspaces (webhook/sync → push to controller).</li>
+                <li><strong>Secrets &amp; approve</strong> — controller vault names only (<code>{{ hayabusa_secret:KEY }}</code> or <code>&lt;&lt;SECRET:KEY&gt;&gt;</code>); values hydrate on LAN Approve.</li>
+                <li><strong>Remote access</strong> — Apache Guacamole for browser SSH/RDP/VNC.</li>
+                <li><strong>Telemetry</strong> — Grafana, Prometheus, InfluxDB proxies under Core paths.</li>
+                <li><strong>AI keys</strong> — user-scoped keys in Profile (see AI section).</li>
+            </ul>
+            <p>Use integrations to reduce manual handoffs, but keep failure paths explicit: if Git is down, know how Novice/local workspace continues; if Guacamole is down, know break-glass SSH on the underlay.</p>
+        </section>
+
+        <section id="ai" class="doc-section">
+            <h3>10) AI and User Keys</h3>
+            <p>Hayabusa supports user-scoped AI keys for assistant functionality. Store keys per user and treat them as sensitive credentials.</p>
+            <ul>
+                <li>Use least-privilege keys where possible.</li>
+                <li>Avoid sending secrets in prompts.</li>
+                <li>Validate AI outputs before operational use.</li>
+            </ul>
+            <h4>What the embedded AI helper now understands</h4>
+            <p>The floating Hayabusa AI Assistant is aware of the main operating surfaces and should guide users to the correct page, tab, and safety boundary. It can explain Workstations map views, the Ansible/OpenTofu console and Graphical View, tenant-scoped <code>openPLC/</code> directories, Apache Guacamole consoles, Observability, SCADA/PLC workflows, ROS2 robotics tooling, ZTP/controller roles, and Image Nest deploy targets.</p>
+            <h4>Recommended prompts</h4>
+            <ul>
+                <li>"Show me how to switch from my personal observability view to my organization Grafana view."</li>
+                <li>"How do I upload an OpenPLC project folder into the Graphical View?"</li>
+                <li>"Which PLC protocols can I read or write from the PLC Viewer, and what safety checks apply?"</li>
+                <li>"Where do I find the Robotics Viewer and what ROS2 tools are installed?"</li>
+                <li>"How do I open a host through Apache Guacamole from Fleet?"</li>
+            </ul>
+            <div class="box note"><strong>AI safety expectation:</strong> the helper can explain and draft steps, but operators must verify identity scope, organization scope, target host/controller, and authorization before running commands or writing PLC values.</div>
+        </section>
+
+        <section id="observability-stack" class="doc-section">
+            <h3>11) Grafana, Prometheus, and InfluxDB</h3>
+            <p>Hayabusa exposes the observability stack through authenticated subpath proxies: <code>/grafana/</code>, <code>/prometheus/</code>, <code>/influxdb/</code>, and the Hayabusa dashboard at <code>/observability</code>. The goal is to keep Grafana, Prometheus, and InfluxDB usable without asking operators to leave Hayabusa or bypass tenant controls.</p>
+            <h4>How the stack is separated</h4>
+            <ul>
+                <li><strong>User scope:</strong> personal metrics, dashboards, datasources, and retention settings are associated with the signed-in user context.</li>
+                <li><strong>Organization scope:</strong> organization metrics and dashboards are associated with the selected organization context and require the user to be a member of that organization.</li>
+                <li><strong>Grafana organization separation:</strong> Hayabusa provisions or selects Grafana organizations and passes the appropriate auth proxy headers so users land in the expected Grafana org.</li>
+                <li><strong>Prometheus query separation:</strong> Hayabusa rewrites tenant-aware PromQL queries where appropriate so metric results are filtered to the selected user or organization scope.</li>
+                <li><strong>InfluxDB bucket separation:</strong> InfluxDB bucket access and retention are tied to the tenant bucket model used by Hayabusa's observability bootstrap logic.</li>
+            </ul>
+            <h4>Using the Observability page</h4>
+            <ol>
+                <li>Open <strong>Observability</strong> from the top navigation or use the <strong>Observability</strong> map view on Workstations.</li>
+                <li>Confirm whether the page is in personal or organization context. If you are a member of organizations, use the scope selector to switch deliberately.</li>
+                <li>Use the Grafana panel for dashboards, Prometheus for metric queries and targets, and InfluxDB for time-series bucket inspection where enabled.</li>
+                <li>Check the status cards before troubleshooting a dashboard. A dashboard issue may be caused by a downstream service, proxy path, datasource, or tenant scope mismatch.</li>
+            </ol>
+            <h4>Grafana</h4>
+            <p>Grafana is used for dashboarding, alert visualization, datasource exploration, and organization-scoped views. Hayabusa proxies Grafana under <code>/grafana/</code> and adjusts subpath behavior so assets, API calls, avatars, and dashboard links resolve under Hayabusa instead of the Grafana container root.</p>
+            <ul>
+                <li>Use Grafana dashboards for high-level operational views.</li>
+                <li>Use Explore for ad hoc metric questions.</li>
+                <li>Use the Hayabusa scope selector before opening Grafana when you need personal vs organization separation.</li>
+                <li>If a panel looks empty, confirm datasource scope, time range, and tenant labels before assuming data loss.</li>
+            </ul>
+            <h4>Prometheus</h4>
+            <p>Prometheus stores and queries operational metrics. Hayabusa proxies Prometheus under <code>/prometheus/</code> and supports tenant-aware query behavior for user and organization separation. Prometheus is best for instant/range queries, target health, rule evaluation, and low-level metric debugging.</p>
+            <ul>
+                <li>Use the Prometheus query UI when you need raw metric evidence.</li>
+                <li>Use target health to distinguish scrape failures from dashboard problems.</li>
+                <li>Use scalar queries such as <code>time()</code> normally; Hayabusa avoids turning scalar expressions into invalid tenant-filtered expressions.</li>
+            </ul>
+            <h4>InfluxDB</h4>
+            <p>InfluxDB is used for time-series buckets and data that fits the Influx model. Hayabusa proxies InfluxDB under <code>/influxdb/</code>, rewrites root-relative UI paths for static assets, and exposes health/setup calls through the Hayabusa auth boundary.</p>
+            <ul>
+                <li>Use InfluxDB for bucket-level inspection and time-series workflows configured by operators.</li>
+                <li>Use tenant bucket names and retention settings to understand where data lives.</li>
+                <li>If the Influx UI appears to onboard unexpectedly, verify the configured admin token and bucket/bootstrap state.</li>
+            </ul>
+            <h4>Retention and administration</h4>
+            <p>Retention can be controlled globally by administrators and per allowed tenant context. Admin retention updates are exposed on the Administration page and through <code>/api/admin/observability/retention</code>. User/org observability settings are exposed through <code>/api/observability/retention</code>.</p>
+            <h4>Troubleshooting observability</h4>
+            <ul>
+                <li><strong>Static asset 404s:</strong> verify requests include the Hayabusa subpath such as <code>/grafana/</code>, <code>/prometheus/</code>, or <code>/influxdb/</code>.</li>
+                <li><strong>Empty Grafana dashboards:</strong> confirm tenant scope, datasource provisioning, and the dashboard time range.</li>
+                <li><strong>Prometheus query errors:</strong> check the raw PromQL and whether the query is tenant-label compatible.</li>
+                <li><strong>Influx setup/onboarding screens:</strong> confirm <code>PEREGRINE_INFLUX_ADMIN_TOKEN</code>, bucket existence, and service health.</li>
+                <li><strong>Live websocket warnings:</strong> confirm whether the upstream feature is enabled and whether the browser request is being made through the correct Hayabusa path.</li>
+            </ul>
+        </section>
+
+        <section id="scada-plc-robotics" class="doc-section">
+            <h3>12) SCADA, PLC, ROS2, and NVIDIA Isaac</h3>
+            <p>Hayabusa now includes industrial-control and robotics surfaces for lab, emulator, and authorized real-system workflows. These tools are powerful and must be operated with explicit authorization and correct target scope.</p>
+            <h4>SCADA viewer</h4>
+            <p>The <strong>SCADA</strong> Workstations view embeds <strong>FUXA</strong>, an open-source browser-based SCADA/HMI screen builder. Use it when the operator task is about controller status, process visibility, protocol targeting, or SCADA-style context rather than general host infrastructure.</p>
+            <ul>
+                <li>Start in SCADA when working with controllers, plants, cells, lines, or emulator labs.</li>
+                <li>Use FUXA for HMI screens, alarms, process visualization, and industrial-protocol presentation.</li>
+                <li>Use it together with PLC Viewer for protocol-specific reads/writes.</li>
+                <li>Use Observability alongside SCADA to correlate controller actions with metrics and host telemetry.</li>
+            </ul>
+            <p>FUXA is installed inside the Hayabusa application container and started by <code>/peregrine/start-server.sh</code> when <code>/opt/fuxa/server/main.js</code> is present. It listens internally on <code>FUXA_PORT</code> (default <code>1881</code>) and stores runtime data under <code>PEREGRINE_FUXA_DATA_DIR</code> (default <code>/var/lib/peregrine/fuxa</code>). Hayabusa exposes the embedded browser UI through the same-origin <code>/fuxa/</code> proxy and exposes <code>/api/scada/status</code> so the SCADA view can show whether FUXA is reachable and where the browser-facing service is located. Protect the FUXA URL with network controls and FUXA/Hayabusa access policy; do not expose unrestricted write-capable SCADA screens to untrusted networks.</p>
+            <h4>PLC Viewer</h4>
+            <p>The PLC Viewer is available from the tabbed console surfaces on Fleet and Workstations. It supports unified PLC reads and controlled writes through Hayabusa APIs. Current protocol families include Modbus TCP, OPC UA, Siemens S7, Allen-Bradley CIP, Beckhoff ADS, Mitsubishi MC, and Omron FINS UDP, depending on installed driver availability.</p>
+            <h4>Reading PLC data</h4>
+            <ol>
+                <li>Open Fleet or Workstations and select the relevant host/controller context.</li>
+                <li>Open the console window and select <strong>PLC Viewer</strong>.</li>
+                <li>Select the protocol and enter the target host, port, address, register/tag/symbol, unit/device ID, and count/type fields required by that protocol.</li>
+                <li>Click <strong>Read PLC</strong> and review the JSON result.</li>
+            </ol>
+            <h4>Writing PLC data</h4>
+            <p>PLC writes are supported but guarded. The server requires the global <code>plc_writes_enabled</code> operator safety flag, and the user must explicitly confirm authorization in the UI for each write request. Write attempts are audited whether they succeed or fail.</p>
+            <ol>
+                <li>Confirm you own or are approved to control the target controller or emulator.</li>
+                <li>Confirm admin policy allows PLC writes. In development images this can be controlled with <code>PEREGRINE_PLC_WRITES_ENABLED</code> and persisted safety policy.</li>
+                <li>Enter the write value(s), function code/tag/symbol, and protocol-specific addressing.</li>
+                <li>Check <strong>I am authorized to write to this PLC</strong>.</li>
+                <li>Click <strong>Write PLC</strong> and verify the result out of band before continuing.</li>
+            </ol>
+            <div class="box danger"><strong>PLC write safety:</strong> a write can change real-world state. Use writes only on systems you own, systems you are approved to control, or emulated lab controllers. Start with reads, use minimal writes, and preserve an emergency stop/rollback path.</div>
+            <h4>Programming and OpenPLC</h4>
+            <p>OpenPLC Editor and MatIEC support controller-program development workflows. Keep source files under the tenant-scoped <code>openPLC/</code> workspace directory, edit them in Graphical View or console, and use OpenPLC tooling from the container when you need project editing or code generation.</p>
+            <h4>Robotics Viewer and ROS2</h4>
+            <p>The <strong>Robotics Viewer</strong> Workstations view is the robotics-oriented operating surface. ROS2 Humble tooling is installed in the Hayabusa container, including <code>ros2</code>, <code>rosdep</code>, <code>colcon</code>, and base ROS packages. Drone workflows use MAVLink as the vehicle protocol, MAVSDK for application-level drone APIs, and MAVROS when ROS2 topic/service bridging is needed.</p>
+            <div class="box note"><strong>Controller-edge RF:</strong> when a controller branch is selected and live, MAVLink connect/status/command, SDR scanner tune/audio, and ADS-B track reads run on the <strong>selected controller</strong> via mesh RPC (<code>edge.mavlink.*</code>, <code>edge.sdr.*</code>, <code>edge.adsb.*</code>). Core remains the cockpit — the browser still calls <code>/api/robotics/*</code>; Core proxies transmit/capture and re-streams audio/telemetry. If the bound controller is offline, those paths fail closed (<code>controller_required</code>) instead of opening hub-local radio.</div>
+            <ul>
+                <li>Use <code>ros2 node list</code> to identify active nodes when attached to a ROS2-enabled environment.</li>
+                <li>Use <code>ros2 topic list</code> and <code>ros2 topic echo</code> for topic discovery and message inspection.</li>
+                <li>Use <code>colcon</code> for ROS2 workspace builds when source packages are available in the container or mounted workspace.</li>
+                <li>Use PX4 SITL or ArduPilot SITL for first tests before attaching to real aircraft.</li>
+                <li>Keep robot credentials, network keys, and vendor tokens out of prompts and source control.</li>
+            </ul>
+            <p><code>/api/robotics/status</code> reports local availability of ROS2, MAVLink/PyMAVLink, MAVSDK, MAVROS, and simulator tooling so operators can tell the difference between a missing tool and a target connectivity issue.</p>
+            <h4>ArduPilot SITL and PX4 SITL simulation</h4>
+            <p>The Robotics Viewer includes a simulator control panel and flight visualizer. The current image bundles ArduPilot Copter SITL through <code>dronekit-sitl</code>; PX4 SITL and PX4 vehicles are supported as external MAVLink endpoints such as <code>udp://:14540</code>. Both simulator and real-vehicle telemetry use the same MAVLink helper, so the visualizer, heartbeat, position, battery, attitude, GPS, and guarded-command behavior are consistent.</p>
+            <ol>
+                <li>Open Workstations, expand <strong>Views</strong>, and select <strong>Robotics Viewer</strong>.</li>
+                <li>In the simulator panel, leave <strong>ArduPilot Copter SITL</strong> selected, optionally set a home latitude/longitude, and click <strong>Start SITL</strong>.</li>
+                <li>Click <strong>Use SITL endpoint</strong>. Hayabusa fills the MAVLink endpoint, starts telemetry, and updates the attitude/position visualizer.</li>
+                <li>For PX4, start PX4 SITL outside Hayabusa and connect to its MAVLink endpoint, commonly <code>udp://:14540</code>. PX4 is not bundled in this image.</li>
+                <li>Use MAVSDK or MAVROS from ROS2 workflows when you need higher-level application APIs or ROS2 topic/service bridging.</li>
+            </ol>
+            <div class="box warn"><strong>ArduPilot GPL compliance boundary:</strong> ArduPilot is GPL-3.0-or-later. Hayabusa launches the unmodified ArduPilot SITL as a separate operating-system process and communicates with it over the public MAVLink protocol. Hayabusa does not link against ArduPilot, copy ArduPilot code into Hayabusa, or create a derivative work of ArduPilot. If you redistribute an image containing ArduPilot SITL or <code>dronekit-sitl</code>, provide the ArduPilot/DroneKit license notices and corresponding source access/source offer for those components. This obligation applies to the GPL simulator components, not to Hayabusa's separate proprietary application code.</div>
+            <h4>MAVLink/MAVSDK connection workflow</h4>
+            <p>The Robotics Viewer includes a <strong>MAVLink endpoint</strong> form for real telemetry connections. Hayabusa stores the endpoint per user or organization scope, starts a tenant-scoped MAVLink helper process, and reads live heartbeat, position, attitude, GPS, battery, status text, command acknowledgements, parameters, mission state, and richer flight data through PyMAVLink. MAVSDK remains installed for higher-level drone application workflows, while the UI uses the MAVLink helper for reliable cross-worker telemetry.</p>
+            <ol>
+                <li>Start a simulator or approved vehicle gateway. Common examples: PX4 SITL <code>udp://:14540</code>, ArduPilot TCP <code>tcp://127.0.0.1:5760</code>, UDP outbound <code>udpout://vehicle-gateway:14550</code>, or serial radio <code>/dev/ttyUSB0:57600</code>.</li>
+                <li>Open Workstations, expand <strong>Views</strong>, and select <strong>Robotics Viewer</strong>.</li>
+                <li>Enter the MAVLink endpoint and an optional vehicle label.</li>
+                <li>Click <strong>Test heartbeat</strong> for a one-shot connectivity check, or <strong>Connect telemetry</strong> to start the background helper.</li>
+                <li>Watch the live telemetry panel for heartbeat, position, battery, attitude, GPS, status text, and command messages.</li>
+                <li>Use guarded commands only for owned/authorized simulators or vehicles. Commands require an authorization checkbox and exact text confirmation.</li>
+            </ol>
+            <div class="box danger"><strong>Robotics command safety:</strong> MAVLink commands such as arm, takeoff, land, and return-to-launch can move real hardware. Use them only on authorized systems with a safe test area, emergency stop/recovery plan, and out-of-band visual confirmation.</div>
+            <h4>Hayabusa Native GCS, ADS-B, and Remote ID</h4>
+            <p>The Robotics Viewer is Hayabusa's native ground-control station for licensed-safe drone operations without bundling Qt/QGroundControl or GPL Mission Planner. It includes a drone world map for ownship MAVLink position, ADS-B aircraft decoded by dump1090, and Remote ID drone tracks ingested from an OpenDroneID/DroneScanner-style bridge. It is designed for tenant-scoped telemetry, operator safety gates, audit logs, and browser-native mission/control workflows.</p>
+            <ul>
+                <li><strong>Native flight deck:</strong> Hayabusa supports flight mode changes, parameter fetch/edit, command ACK display, mission download, mission clear, guarded <code>goto</code>, and guarded waypoint mission upload through the active MAVLink helper.</li>
+                <li><strong>Optional QGroundControl / Mission Planner:</strong> Hayabusa can still store tenant-scoped launcher URLs for external or Guacamole-hosted ground-station desktops. These are optional compatibility tools, not bundled dependencies. QGroundControl requires Qt licensing care; Mission Planner is GPLv3 and should remain external/separate.</li>
+                <li><strong>dump1090 / RTL-SDR:</strong> the container includes <code>rtl-sdr</code> and <code>dump1090-mutability</code> where installed. Hayabusa can start/stop a tenant-scoped dump1090 background receiver bound to loopback, reads its aircraft JSON, and plots decoded ADS-B aircraft.</li>
+                <li><strong>OpenDroneID / DroneScanner / OpenSpyglass-style Remote ID:</strong> Hayabusa exposes a tenant-scoped ingest endpoint for decoded Remote ID tracks. A local bridge process can listen on an Alfa Wi-Fi card or Bluetooth receiver, decode Remote ID packets, and POST normalized track JSON into Hayabusa.</li>
+                <li><strong>Safety controls:</strong> writes such as mode changes, parameter edits, mission clear, <code>goto</code>, arm/takeoff/land/RTL, and mission upload require explicit authorization and confirmation text.</li>
+                <li><strong>Multi-drone fleet:</strong> save multiple vehicles (id, label, MAVLink endpoint, camera URL) per tenant with <code>/api/robotics/fleet</code>. Each vehicle gets its own MAVLink helper session. Pass <code>vehicle_id</code> on connect, commands, missions, and native actions, or choose the active vehicle in the Robotics Viewer fleet panel.</li>
+                <li><strong>Gamepad / joystick:</strong> the browser Gamepad API sends MAVLink <code>MANUAL_CONTROL</code> to the active vehicle after guarded confirmation text <code>enable joystick</code>. Use only on authorized aircraft in a suitable manual flight mode with a visual observer and emergency recovery plan.</li>
+                <li><strong>Cameras:</strong> configure per-vehicle <code>camera_url</code> values (HTTP/HTTPS MJPEG, RTSP, HLS, or embed). Hayabusa proxies MJPEG/RTSP through <code>/api/robotics/camera/&lt;vehicle_id&gt;/stream</code> for same-origin viewing. Do not embed credentials in camera URLs.</li>
+            </ul>
+            <div class="box warn"><strong>Airspace and radio warning:</strong> ADS-B and Remote ID receivers are passive situational-awareness tools. Do not rely on them as the only collision-avoidance source. Follow local aviation, RF, privacy, and Remote ID laws, and use only hardware you are authorized to operate.</div>
+            <div class="box danger"><strong>Joystick safety:</strong> gamepad input can move a real aircraft immediately. Arm joystick control only after verifying the correct active vehicle, suitable flight mode, geofence/RTL policy, and local regulations. Disarm when not actively flying.</div>
+            <h4>NVIDIA Isaac remote integration</h4>
+            <p>The <strong>NVIDIA ISAAC</strong> Workstations view connects Hayabusa to a remote NVIDIA Isaac server that you provide and license separately. This is designed for environments where Hayabusa handles fleet, ROS2, MAVLink, SCADA, observability, and policy context while NVIDIA Isaac / Isaac Sim / Isaac ROS handles GPU-heavy robotics workloads such as simulation, perception pipelines, synthetic data, model evaluation, and Omniverse-based visualization.</p>
+            <h4>How to connect a remote Isaac server</h4>
+            <ol>
+                <li>Deploy and license NVIDIA Isaac, Isaac Sim, Isaac ROS, Omniverse Streaming, CUDA, GPU drivers, and any NVIDIA container/runtime pieces on your GPU host according to NVIDIA's terms.</li>
+                <li>Expose an authenticated HTTPS Isaac or streaming UI endpoint to the Hayabusa operator network. Do not put usernames, passwords, API keys, or tokens in URLs.</li>
+                <li>Open Workstations, expand <strong>Views</strong>, and select <strong>NVIDIA ISAAC</strong>.</li>
+                <li>Enter the Isaac server URL, optional streaming/UI URL, optional ROS bridge URL such as <code>ws://isaac-host:9090</code>, ROS domain ID, and operator notes.</li>
+                <li>Click <strong>Save and test</strong>. Hayabusa stores the connection in the current user or organization scope and checks remote reachability.</li>
+                <li>Use the embedded frame or <strong>Open remote</strong> link to access the remote Isaac UI, then bridge telemetry/control through your authorized ROS2/MAVLink network.</li>
+            </ol>
+            <div class="box warn"><strong>NVIDIA legal boundary:</strong> Hayabusa does not include, own, sublicense, or redistribute NVIDIA Isaac. The NVIDIA ISAAC view is a remote connector to your own NVIDIA deployment. NVIDIA, NVIDIA Isaac, Isaac Sim, Isaac ROS, Omniverse, CUDA, Jetson, and related names are NVIDIA trademarks/products. You are responsible for NVIDIA EULA, subscription, driver, container, model, and GPU-runtime compliance.</div>
+            <p>The backend endpoint <code>/api/isaac/status</code> supports <code>GET</code> and <code>POST</code>. It stores URLs per tenant scope, rejects URLs with embedded credentials, rejects loopback/link-local/metadata targets, and reports reachability without storing secrets.</p>
+            <h4>Open-source and commercial-use posture</h4>
+            <p>The recommended stack is open source and can be used commercially, but some pieces carry copyleft obligations if you modify and redistribute them.</p>
+            <ul>
+                <li><strong>FUXA:</strong> MIT licensed core project; commercial use is permitted with notice retention.</li>
+                <li><strong>ROS2:</strong> mostly Apache-2.0/BSD/MIT by package; verify package-specific notices for any extra ROS packages you add.</li>
+                <li><strong>MAVLink:</strong> generator is LGPLv3-family, while generated protocol code includes a permissive MIT exception.</li>
+                <li><strong>MAVSDK:</strong> BSD-3-Clause; commercial use is permitted with license/disclaimer retention.</li>
+                <li><strong>MAVROS:</strong> triple-licensed BSD/GPLv3/LGPLv3; use the license path that matches your distribution model.</li>
+                <li><strong>ArduPilot SITL / DroneKit SITL:</strong> ArduPilot is GPL-3.0-or-later. Hayabusa treats it as a separate unmodified simulator process controlled over MAVLink. Redistributing the image requires GPL notices/source availability for ArduPilot/DroneKit SITL, but this separation does not require publishing Hayabusa source code.</li>
+                <li><strong>PX4:</strong> BSD-3-Clause and commercially usable with notice retention. PX4 is supported as an external MAVLink endpoint and is not bundled in the current image.</li>
+                <li><strong>QGroundControl:</strong> dual Apache-2.0/GPLv3. The Apache-2.0 path is compatible with proprietary deployments but requires appropriate Qt licensing if you build/distribute it that way; GPL builds should remain separate/external if you do not want copyleft obligations on a combined work.</li>
+                <li><strong>Mission Planner:</strong> GPLv3. Hayabusa treats it as an external/separate ground station and does not link it into Hayabusa.</li>
+                <li><strong>dump1090 / rtl-sdr:</strong> useful for passive ADS-B receiving. Common dump1090 packages are GPL lineage; Hayabusa consumes JSON output over a process/data boundary.</li>
+                <li><strong>OpenDroneID:</strong> Apache-2.0 reference receivers and core libraries are suitable for commercial integration with notice retention. Verify the license of any specific DroneScanner/OpenSpyglass desktop build before bundling it.</li>
+                <li><strong>OpenPLC Editor / MatIEC / Beremiz lineage:</strong> commercial use is permitted, but GPL/copyleft terms can require source availability for modified redistributed tooling. PLC programs you author are not automatically forced open by using the editor.</li>
+                <li><strong>NVIDIA Isaac:</strong> not bundled by Hayabusa. Commercial use depends on NVIDIA's current license terms for the specific Isaac/Omniverse/CUDA/GPU components you deploy remotely.</li>
+            </ul>
+            <div class="box note"><strong>License note:</strong> this is operational guidance, not legal advice. If you ship a commercial appliance, keep third-party notices with the image and have counsel review any modified GPL/AGPL/LGPL components.</div>
+            <h4>Relevant APIs</h4>
+            <ul>
+                <li><code>/fuxa/</code>: same-origin embedded FUXA UI proxy used by the SCADA view.</li>
+                <li><code>/api/scada/status</code>: FUXA service URL, reachability, and license summary for the SCADA view.</li>
+                <li><code>/api/robotics/status</code>: ROS2 and drone tooling availability for Robotics Viewer.</li>
+                <li><code>/api/robotics/mavlink/status</code>: current tenant-scoped MAVLink endpoint, helper-process status, and latest telemetry snapshot.</li>
+                <li><code>/api/robotics/mavlink/test</code>: one-shot heartbeat test for a MAVLink endpoint.</li>
+                <li><code>/api/robotics/mavlink/connect</code>: save the endpoint and start the MAVLink telemetry helper.</li>
+                <li><code>/api/robotics/mavlink/disconnect</code>: stop the active MAVLink telemetry helper.</li>
+                <li><code>/api/robotics/mavlink/command</code>: guarded arm/disarm/takeoff/land/return-to-launch/goto command endpoint.</li>
+                <li><code>/api/robotics/mavlink/native</code>: native GCS endpoint for parameter fetch/edit, flight mode change, mission download, and mission clear.</li>
+                <li><code>/api/robotics/mavlink/mission</code>: guarded waypoint mission upload endpoint.</li>
+                <li><code>/api/robotics/ground-control/status</code>: tenant-scoped QGroundControl, Mission Planner, dump1090, and Remote ID bridge launcher/status endpoint.</li>
+                <li><code>/api/robotics/airspace/status</code>: combined ownship, ADS-B, Remote ID, and mission map data endpoint.</li>
+                <li><code>/api/robotics/remote-id/ingest</code>: decoded Remote ID track ingest endpoint for OpenDroneID/DroneScanner bridge clients.</li>
+                <li><code>/api/robotics/adsb/status</code>, <code>/api/robotics/adsb/start</code>, and <code>/api/robotics/adsb/stop</code>: tenant-scoped dump1090 receiver control and status endpoints.</li>
+                <li><code>/api/robotics/sitl/status</code>: current tenant-scoped ArduPilot SITL process status, endpoint, and compliance summary.</li>
+                <li><code>/api/robotics/sitl/start</code>: start tenant-scoped ArduPilot Copter SITL with a validated home latitude/longitude.</li>
+                <li><code>/api/robotics/sitl/stop</code>: stop the active tenant-scoped ArduPilot SITL process.</li>
+                <li><code>/api/isaac/status</code>: tenant-scoped remote NVIDIA Isaac connection save/test/status endpoint.</li>
+                <li><code>/api/plc/drivers/status</code>: installed driver and write-support status.</li>
+                <li><code>/api/plc/read</code>: unified multi-vendor read endpoint.</li>
+                <li><code>/api/plc/write</code>: guarded multi-vendor write endpoint.</li>
+                <li><code>/api/plc/modbus/read</code>: compatibility endpoint for Modbus TCP read workflows.</li>
+            </ul>
+        </section>
+
+                        <section id="profile" class="doc-section">
+            <h3>13) Profile</h3>
+            <p>Profile is where you verify identity, provider linkage, personal settings, AI keys, and <strong>usage/cost</strong> context. If actions seem unexpected — wrong org data, missing keys, denied APIs, or unexpected token spend — check Profile first.</p>
+            <h4>How the page is organized</h4>
+            <p>Profile uses categories and tabs so related controls stay grouped (identity, API/AI keys, notifications/preferences, and usage/billing). Use the tabs rather than scrolling one long list.</p>
+            <h4>Typical tasks</h4>
+            <ul>
+                <li>Confirm logged-in identity and linked providers (Google, Slack, Discord, Microsoft).</li>
+                <li>Manage personal AI keys used by the assistant and alert-suggest flows.</li>
+                <li>Review usage and costs for your account (included tokens, spend, overage signals).</li>
+                <li>Adjust preferences that affect notifications or observability scope.</li>
+            </ul>
+            <div class="box note"><strong>Habit:</strong> after every login or org switch, glance at Profile and the current organization selector before running OpenTofu, Ansible, or PLC writes.</div>
+        </section>
+
+                <section id="orgs" class="doc-section">
+            <h3>14) Organizations</h3>
+            <p>Organizations provide scope boundaries and team ownership. Structure orgs to mirror real operational responsibility (site, product line, customer) — not arbitrary folders.</p>
+            <h4>What org scope affects</h4>
+            <ul>
+                <li>Fleet/Workstations inventory visibility and claim rights.</li>
+                <li>Ansible/OpenTofu and <code>openPLC/</code> workspace trees (physically separate from personal).</li>
+                <li>Observability Grafana org / Prometheus tenant filters / Influx buckets.</li>
+                <li>Robotics, Isaac, and other tenant-scoped connections.</li>
+            </ul>
+            <h4>Operator guidance</h4>
+            <ul>
+                <li>Grant least privilege; separate read-only members from writers.</li>
+                <li>Document who owns each org and which controllers/sites attach to it.</li>
+                <li>Never run destructive playbooks until the org selector matches the intended blast radius.</li>
+            </ul>
+        </section>
+
+                        <section id="admin" class="doc-section">
+            <h3>15) Administration</h3>
+            <p>Administration controls global platform behavior — safety toggles, identity posture, and operational visibility. Treat admin actions as reversible control-plane operations with a defined owner and verification signal.</p>
+            <p>Before changing global toggles, define: expected blast radius, rollback condition, and how you will know it worked (login success rate, tunnel health, host freshness, or scrape health).</p>
+            <h4>Subsections in this category</h4>
+            <ul>
+                <li><a href="#admin-safety">15.1 Safety Controls</a> — sign-in, Headscale, bans/allowlists, throttling.</li>
+                <li><a href="#admin-identity">15.2 Manual Identity Controls</a> — local/fallback auth paths.</li>
+                <li><a href="#admin-observability">15.3 Logs and Operational Visibility</a> — audit and accountability.</li>
+            </ul>
+            <div class="box warn"><strong>Break-glass:</strong> always preserve at least one recovery admin path before disabling sign-ins or overlay controls during an incident.</div>
+        </section>
+
+        <section id="admin-safety" class="doc-section">
+            <h4>15.1) Safety Controls</h4>
+            <p>Safety controls exist to protect platform integrity during incidents, abuse events, and maintenance windows.</p>
+            <h4>What each control does</h4>
+            <ul>
+                <li><strong>Sign-in toggle:</strong> temporarily blocks new sign-ins (preserves emergency paths configured by policy).</li>
+                <li><strong>Headscale toggle:</strong> disables/reenables overlay control behavior during network investigations.</li>
+                <li><strong>Bandwidth throttling controls:</strong> operator-level constraints for controlled behavior.</li>
+                <li><strong>Bans:</strong> prevent specific identities from accessing the platform.</li>
+                <li><strong>Allowlists:</strong> define explicit identities permitted under tighter posture.</li>
+            </ul>
+            <h4>How to operate safety controls</h4>
+            <ol>
+                <li>Define incident objective first (containment, recovery, investigation).</li>
+                <li>Apply minimum required control change.</li>
+                <li>Document who changed what and why.</li>
+                <li>Monitor service behavior.</li>
+                <li>Revert controls when safe and record closure notes.</li>
+            </ol>
+            <div class="box danger"><strong>Critical:</strong> never apply broad safety changes without communicating impact to operators and users. Always preserve at least one break-glass admin recovery path.</div>
+        </section>
+
+                        <section id="admin-identity" class="doc-section">
+            <h4>15.2) Manual Identity Controls</h4>
+            <p>Manual identity tooling supports controlled local auth workflows and admin fallback when federated providers (Google, Slack, Discord, Microsoft) are unavailable or policy requires an emergency path.</p>
+            <h4>When to use it</h4>
+            <ul>
+                <li>Provider outage or misconfiguration blocks normal sign-in.</li>
+                <li>Policy requires a temporary local account for a controlled maintenance window.</li>
+                <li>Incident response needs a known-good admin identity independent of IdP health.</li>
+            </ul>
+            <h4>Recommended usage</h4>
+            <ul>
+                <li>Enable only when required by policy or incident response.</li>
+                <li>Use strong credentials; rotate after high-risk windows.</li>
+                <li>Disable fallback paths when no longer needed; record who enabled them and why.</li>
+                <li>Prefer federated login for day-to-day users to reduce password custody on Core.</li>
+            </ul>
+            <div class="box warn"><strong>Do not</strong> leave emergency local auth enabled permanently in production without compensating controls and review.</div>
+        </section>
+
+                <section id="admin-observability" class="doc-section">
+            <h4>15.3) Logs and Operational Visibility</h4>
+            <p>Admin-level visibility includes audit history, safety actions, and network-related event logs. Use logs for accountability and root-cause analysis — not only for “when something breaks.”</p>
+            <h4>Minimum logging discipline</h4>
+            <ul>
+                <li>Record actor, action, target, and reason for safety and identity changes.</li>
+                <li>Correlate changes with incident timelines (and with Grafana/Prometheus when metrics moved).</li>
+                <li>Store enough context for post-incident review; avoid logging secrets or raw credentials.</li>
+                <li>Review PLC write audits and robotics command audits after any guarded write session.</li>
+            </ul>
+        </section>
+
+                <section id="architecture" class="doc-section">
+            <h3>16) Architecture and Runtime</h3>
+            <p>Hayabusa Core runs as a containerized application (Flask/gunicorn in typical deploys) composed of templates, static assets, and route handlers. Controllers are separate site appliances (API, DHCP/PXE edge, secrets, Image Nest, LAN Approve). Operational behavior is always <strong>code + persisted state</strong>.</p>
+            <p>When debugging, verify both: “Is the code path deployed?” and “Is runtime state what we think it is?” Map telemetry is sampled asynchronously and rendered as periodic snapshots — freshness and sampler heartbeat distinguish a quiet network from a stale pipeline.</p>
+            <h4>Core vs Controller (one diagram in words)</h4>
+            <ul>
+                <li><strong>Core</strong> — public/brain: identity, Fleet/Workstations, GitOps agent, OpenTofu/Ansible orchestration, observability proxies.</li>
+                <li><strong>Controller</strong> — site edge: dnsmasq DHCP/PXE, <code>/ztp/fetch</code>, secrets vault, Image Nest, job hydrate on LAN Approve.</li>
+                <li><strong>Git</strong> — optional Advanced source of truth; not the LAN boot pipe.</li>
+            </ul>
+            <div class="box note">Longer architecture write-ups live in the repo under <code>docs/ZTP-AND-CONTROLLER-ARCHITECTURE.md</code> and <code>docs/IMAGE-NEST-AND-WINDOWS-IMAGES.md</code>.</div>
+        </section>
+
+                <section id="state" class="doc-section">
+            <h3>17) Persistence and State</h3>
+            <p>Hayabusa persists key operational state to disk volumes: identity linkage, tenant network allocations, safety policy, user-scoped encrypted materials, workspaces, and controller data (leases, nest bank, vault).</p>
+            <p>Know which controls survive restarts and which are session-derived. Some diagnostics (immediate baseline compare, transient path highlights) are intentionally runtime-scoped for speed. If compliance needs durable history, add explicit storage policy rather than assuming every visualization is persisted.</p>
+            <h4>Examples</h4>
+            <ul>
+                <li><strong>Persists</strong> — org memberships, tenant CIDRs, Image Nest bank on the controller volume, Guacamole DB, Grafana orgs/datasources (as provisioned).</li>
+                <li><strong>Session / ephemeral</strong> — browser session cookies, some map overlays, in-memory baselines.</li>
+            </ul>
+        </section>
+
+                <section id="runbooks" class="doc-section">
+            <h3>18) Common Runbooks</h3>
+            <h4>Runbook: New operator onboarding</h4>
+            <ol>
+                <li>Verify identity and role assignment (Profile + org selector).</li>
+                <li>Walk Workstations → Fleet → Networking in read-only mode (§3–§6).</li>
+                <li>Execute one approved low-risk action (refresh, inspect, AI draft review).</li>
+            </ol>
+            <h4>Runbook: Contain suspicious account activity</h4>
+            <ol>
+                <li>Apply account ban/allowlist controls (Admin safety).</li>
+                <li>If needed, disable new sign-ins temporarily — keep break-glass admin.</li>
+                <li>Review audit and network logs.</li>
+                <li>Document and restore normal posture once resolved.</li>
+            </ol>
+            <h4>Runbook: Tenant subnet issue</h4>
+            <ol>
+                <li>Review tenant allocation records (§6.3).</li>
+                <li>Validate overlap constraints and expected ownership.</li>
+                <li>Apply corrected assignment with validation.</li>
+                <li>Confirm connectivity and overlay/IPsec behavior.</li>
+            </ol>
+            <h4>Runbook: Overlay tunnel slow but not down</h4>
+            <ol>
+                <li>Open Workstations Overlay and inspect link health color/state.</li>
+                <li>Open Underlay and confirm whether adjacent links show elevated jitter/loss.</li>
+                <li>Run Path Trace between affected source/destination IPs.</li>
+                <li>Use telemetry drawer top talkers to identify likely traffic contributors.</li>
+                <li>Apply smallest corrective action first (policy, route, selector, or rate control), then re-verify health trend.</li>
+            </ol>
+            <h4>Runbook: Bank Windows/Linux media then create a VM</h4>
+            <ol>
+                <li>On the controller, open Image Nest (<code>/image-nest</code>) and upload a legal ISO (§7.1).</li>
+                <li>Choose deploy target (bare metal / hypervisor media / bootable / Hyper-V / VMware) and Strip or Full bank.</li>
+                <li>Commit OpenTofu with <code>&lt;&lt;IMAGE_NEST:…&gt;&gt;</code> placeholders only.</li>
+                <li>Queue from Hayabusa; <strong>LAN Approve</strong> on the controller; apply on Core.</li>
+                <li>Verify guest boot; remember empty disk stubs are not a runnable OS.</li>
+            </ol>
+        </section>
+
+                <section id="troubleshooting" class="doc-section">
+            <h3>19) Troubleshooting</h3>
+            <h4>Symptom: Page looks outdated or broken</h4>
+            <ul>
+                <li>Hard refresh browser assets (Ctrl/Cmd+Shift+R).</li>
+                <li>Verify auth session and route existence.</li>
+                <li>Check whether Core was restarted after template/image changes.</li>
+            </ul>
+            <h4>Symptom: Host list or network status inconsistent</h4>
+            <ul>
+                <li>Refresh discovery and overlay states.</li>
+                <li>Validate safety toggles and Headscale/WireGuard posture.</li>
+                <li>Inspect recent admin actions in logs.</li>
+                <li>Confirm organization selector matches the inventory you expect.</li>
+            </ul>
+            <h4>Symptom: Access unexpectedly denied</h4>
+            <ul>
+                <li>Check role/scope context (Profile + org).</li>
+                <li>Verify active bans/allowlist policy.</li>
+                <li>Confirm admin identity matching policy inputs.</li>
+            </ul>
+            <h4>Symptom: Link health appears severe but throughput is high</h4>
+            <ul>
+                <li>Check whether loss or jitter thresholds are tripping critical-state logic.</li>
+                <li>Confirm telemetry freshness and sampler heartbeat before acting.</li>
+                <li>Correlate with top-talker behavior and path trace results.</li>
+                <li>Treat this as quality degradation, not capacity success.</li>
+            </ul>
+            <h4>Symptom: OpenTofu/Ansible cannot find an image or secret</h4>
+            <ul>
+                <li>Confirm placeholders are still in git (not real paths/passwords).</li>
+                <li>Confirm the job was LAN Approved on the controller that holds the vault/Nest bank.</li>
+                <li>Check Image Nest registry aliases (§7.1) and secret names on the controller.</li>
+            </ul>
+            <h4>Symptom: /docs section missing after an update</h4>
+            <ul>
+                <li>Hard refresh; open the section hash directly (e.g. <code>/docs#image-nest</code>).</li>
+                <li>Confirm Core image/template includes the latest <code>docs.html</code> (DEV_SYNC or rebuild).</li>
+            </ul>
+        </section>
+
+                <section id="best-practices" class="doc-section">
+            <h3>20) Best Practices</h3>
+            <ul>
+                <li><strong>Make scope explicit</strong> before every change (user vs org, site vs lab).</li>
+                <li><strong>Prefer staged rollouts</strong> over broad immediate actions; use OpenTofu plans and Ansible check modes where available.</li>
+                <li><strong>Least privilege</strong> for accounts, org roles, AI keys, and Guacamole credentials.</li>
+                <li><strong>Placeholders only in git</strong> — prefer <code>{{ hayabusa_secret:KEY }}</code> or <code>&lt;&lt;SECRET:KEY&gt;&gt;</code> (plus <code>&lt;&lt;IMAGE_NEST:…&gt;&gt;</code>); hydrate on LAN Approve.</li>
+                <li><strong>Auditability by default</strong> — who changed what, when, and why.</li>
+                <li><strong>Environment-specific runbooks</strong> — this manual is general; your CIDRs, change windows, and owners are local.</li>
+                <li><strong>Use AI to draft, humans to approve</strong> — especially for OpenTofu, Ansible, PLC, and MAVLink commands.</li>
+                <li><strong>Empty Nest stubs are not OS images</strong> — know ISO vs WIM vs bootable disk vs VHDX/VMDK before attaching media.</li>
+            </ul>
+        </section>
+
+                <section id="faq" class="doc-section">
+            <h3>21) FAQ</h3>
+            <h4>Does this page include API route listings?</h4>
+            <p>No. This page is operational and conceptual. Use <code>/api</code> for route lists and endpoint details.</p>
+            <h4>Can new users become productive from this guide?</h4>
+            <p>Yes — start with §3 onboarding, then Ansible/OpenTofu (§4.2) and Fleet (§5). Teams should still keep local runbooks for environment-specific standards.</p>
+            <h4>What is the fastest way to avoid mistakes?</h4>
+            <p>Verify identity scope and target scope (org, host, CIDR, PLC/drone) before executing changes. Prefer dry-runs and LAN Approve for secrets/media.</p>
+            <h4>Do I need a Hayabusa Controller?</h4>
+            <p>Core alone supports sign-in, maps, and crafting. A controller on the site LAN is required for DHCP/PXE ZTP, Image Nest banking, and LAN Approve hydration of secrets and nest refs.</p>
+            <h4>OpenTofu vs Ansible — which do I use?</h4>
+            <p>OpenTofu when the resource must converge to a declared state (often VMs/cloud/objects). Ansible when you need procedural configuration with softer failure semantics. Many stacks use both.</p>
+            <h4>Where do Windows/Linux ISOs get prepared?</h4>
+            <p>On the controller <strong>Image Nest</strong> page (<code>/image-nest</code>). See §7.1 for deploy targets (bare metal, hypervisor media, bootable disk, Hyper-V, VMware).</p>
+            <h4>Why is my Grafana dashboard empty?</h4>
+            <p>Confirm personal vs organization scope, datasource provisioning, time range, and tenant labels — then check Prometheus targets. See §11.</p>
+            <h4>How do I contact Tracedroute support?</h4>
+            <p>Two options: open an <a href="https://service.tracedroute.net/support/">in-app support ticket</a> on Service Orders, or email <a href="mailto:support@tracedroute.net">support@tracedroute.net</a>.</p>
+        </section>
+
+                        <section id="derivatives" class="doc-section">
+            <h3>22) Derivatives</h3>
+            <p>In Hayabusa, a <strong>derivative</strong> is any reusable operational unit that originates from core capabilities without becoming a separate product. Derivatives reuse Hayabusa’s identity, network, governance, and operational model.</p>
+            <h4>Examples</h4>
+            <ul>
+                <li>Workspace templates and runbook variants (Ansible/OpenTofu packs).</li>
+                <li>Policy overlays (safety, allowlists, tenant conventions).</li>
+                <li>Integration adapters (GitOps layouts, vendor ZTP packs).</li>
+                <li>Tenant-specific workflow packs and deployment conventions.</li>
+                <li>Image Nest bake recipes and Autounattend profiles reused across sites.</li>
+            </ul>
+            <h4>How to manage derivatives well</h4>
+            <ul>
+                <li>Keep each derivative <strong>versioned</strong>, <strong>scoped</strong> (user/org/site), and <strong>owned</strong>.</li>
+                <li>Document where it diverges from base platform expectations.</li>
+                <li>Prefer placeholders for secrets and Image Nest refs so packs stay portable.</li>
+                <li>Before adoption, verify security assumptions, identity scope, network boundaries, and rollback strategy.</li>
+            </ul>
+            <div class="box note"><strong>Rule of thumb:</strong> if removing Hayabusa identity/network/governance would make the pack useless, it is a derivative — not a fork of Hayabusa itself.</div>
+        </section>
+
+        <section id="about" class="doc-section">
+            <h3>23) About</h3>
+            <p>Hayabusa is an infrastructure command center built around open-source building blocks — Ansible, OpenTofu, WireGuard/Headscale, Guacamole, Grafana/Prometheus/Influx, OpenPLC, ROS2/MAVLink tooling, and more — with a unified identity, network, and governance model for individuals and organizations.</p>
+            <p>The platform is designed so you may never use every surface. Start from onboarding (§3), learn Ansible/OpenTofu (§4.2), then deepen into the categories that match your role (networking, ZTP/Nest, observability, SCADA/robotics, admin).</p>
+            <p>For reusable packs built on top of Hayabusa, see <a href="#derivatives">§22 Derivatives</a>. For bundled component licenses, see <a href="#open-source-notices">§24 Open Source notices</a>.</p>
+        </section>
+
+                <section id="open-source-notices" class="doc-section">
+            <h3>24) Open Source &amp; Third-Party Notices</h3>
+            <p>Hayabusa ships with and invokes many open-source components across SECops, DevOps, ZTP, observability, remote access, and industrial/robotics tooling. This section surfaces license and trademark disclosures so operators can redistribute or audit compliance correctly.</p>
+            <p>Download the full notices file, or read the embedded summary below. Component-specific boundaries (for example ArduPilot SITL as a separate process) are also called out in domain sections such as SCADA / PLC / ROS2.</p>
+            <a class="docs-download-btn" href="docs/THIRD_PARTY_NOTICES.md" download>Download THIRD_PARTY_NOTICES.md</a>
+            <div class="notice-body">
+                {# Shared body for /open-source-notices and /docs#open-source-notices #}
+<p class="notice-lead">
+    Hayabusa integrates open-source tools for <strong>SECops</strong> (RustScan, tcpdump, Zeek, Metasploit, ZAP, NetExec, Nuclei, Prowler, Trivy, BloodHound.py),
+    <strong>DevOps / IaC</strong> (<strong>Ansible</strong>, <strong>OpenTofu</strong>, dnsmasq),
+    <strong>observability</strong> (<strong>Grafana</strong>, <strong>Prometheus</strong>, <strong>Prometheus Pushgateway</strong>, <strong>InfluxDB</strong>, Telegraf, node_exporter),
+    <strong>security ops</strong> (<strong>Wazuh</strong>, <strong>Shuffle</strong> SOAR — AGPL; MongoDB is Shuffle’s private SSPL dependency),
+    <strong>mesh VPN</strong> (<strong>Headscale</strong>, <strong>Tailscale</strong> client — WireGuard-based),
+    <strong>IPsec</strong> (<strong>strongSwan</strong>), and lab automation.
+    Vendor names such as Cisco or Juniper appear only to identify compatible devices — see trademarks below.
+    Hayabusa itself is proprietary software.
+</p>
+
+<h4 class="notice-heading">Nmap / Wireshark / tshark</h4>
+<p>
+    Hayabusa SECops images <strong>do not install</strong> Nmap, Wireshark, or tshark.
+    Port scans use <strong>RustScan</strong> (MIT, greppable mode — no nmap handoff); capture uses <strong>tcpdump</strong> (BSD-style) with optional <strong>Zeek</strong> (BSD-3-Clause).
+</p>
+
+<h4 class="notice-heading">SECops components at a glance</h4>
+<table class="notice-table">
+    <thead>
+        <tr><th>Tool</th><th>Typical license</th><th>Attribution</th><th>Redistribute in image</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>RustScan</td><td>MIT</td><td>Yes</td><td>Yes with notices</td></tr>
+        <tr><td>ieee-data (OUI)</td><td>Data / package terms</td><td>Yes</td><td>Yes (data)</td></tr>
+        <tr><td>tcpdump / libpcap</td><td>BSD-style</td><td>Yes</td><td>Yes with notices</td></tr>
+        <tr><td>Zeek</td><td>BSD-3-Clause</td><td>Yes</td><td>Yes with notices</td></tr>
+        <tr><td>Metasploit Framework</td><td>BSD-3-Clause</td><td>Yes</td><td>Yes with notices</td></tr>
+        <tr><td>OWASP ZAP</td><td>Apache-2.0</td><td>NOTICE</td><td>Yes</td></tr>
+        <tr><td>NetExec</td><td>BSD-2-Clause</td><td>Yes</td><td>Yes</td></tr>
+        <tr><td>Nuclei</td><td>MIT</td><td>Yes</td><td>Yes</td></tr>
+        <tr><td>Prowler</td><td>Apache-2.0</td><td>NOTICE</td><td>Yes</td></tr>
+        <tr><td>Trivy</td><td>Apache-2.0</td><td>NOTICE</td><td>Yes</td></tr>
+        <tr><td>BloodHound.py</td><td>MIT</td><td>Yes</td><td>Yes</td></tr>
+    </tbody>
+</table>
+
+<h4 class="notice-heading">Mesh VPN &amp; IPsec</h4>
+<table class="notice-table">
+    <thead>
+        <tr><th>Component</th><th>Typical license</th><th>In Hayabusa</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Headscale</td><td>BSD-3-Clause</td><td>Self-hosted mesh control server</td></tr>
+        <tr><td>Tailscale (<code>tailscale</code> / <code>tailscaled</code>)</td><td>BSD-3-Clause (client)</td><td>WireGuard-based mesh data plane</td></tr>
+        <tr><td>strongSwan (IPsec)</td><td>GPL-2.0+</td><td>Site-to-site / remote-access VPN (<code>charon</code>)</td></tr>
+    </tbody>
+</table>
+<p>
+    <strong>WireGuard®</strong> is a trademark of Jason A. Donenfeld. Hayabusa does not ship standalone <code>wireguard-tools</code> (<code>wg</code>).
+    <strong>Tailscale®</strong> is a trademark of Tailscale Inc.; Hayabusa is not affiliated with Tailscale Inc. Using Tailscale Inc.'s hosted coordination service (if enabled) is subject to their terms in addition to the open-source client license.
+</p>
+
+<h4 class="notice-heading" id="observability">Observability (metrics &amp; monitoring)</h4>
+<table class="notice-table">
+    <thead>
+        <tr><th>Component</th><th>Typical license</th><th>In Hayabusa</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Grafana</td><td>AGPL-3.0</td><td>Dashboard UI and alerting; accessed via authenticated Hayabusa proxy (<code>/grafana/</code>) with user / organization separation. <strong>Unmodified</strong> upstream image <code>grafana/grafana:11.2.2</code>.</td></tr>
+        <tr><td>Prometheus</td><td>Apache-2.0</td><td>Time-series metrics and PromQL queries; global TSDB retention set by administrator</td></tr>
+        <tr><td>Prometheus Pushgateway</td><td>Apache-2.0</td><td>Short-lived job and agent metric ingestion for Prometheus scraping</td></tr>
+        <tr><td>Prometheus Alertmanager</td><td>Apache-2.0</td><td>Alert routing (<code>prom/alertmanager:v0.27.0</code>)</td></tr>
+        <tr><td>InfluxDB</td><td>MIT (InfluxDB License v2 for server)</td><td>Metrics API and per-tenant buckets with retention capped by administrator</td></tr>
+        <tr><td>Telegraf</td><td>MIT</td><td>ZTP / bare-metal agent install and host metric collection (optional recipe)</td></tr>
+        <tr><td>Prometheus node_exporter</td><td>Apache-2.0</td><td>Host metrics collection (optional ZTP recipe)</td></tr>
+    </tbody>
+</table>
+<p>
+    <strong>Grafana®</strong> is a trademark of Grafana Labs. <strong>Prometheus®</strong> is a trademark of The Linux Foundation.
+    <strong>InfluxDB®</strong> and <strong>Telegraf™</strong> are trademarks of InfluxData, Inc.
+    Hayabusa is not affiliated with those vendors.
+</p>
+
+<h4 class="notice-heading" id="security-ops">Security ops (Wazuh &amp; Shuffle)</h4>
+<table class="notice-table">
+    <thead>
+        <tr><th>Component</th><th>Typical license</th><th>In Hayabusa</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Shuffle (SOAR)</td><td>AGPL-3.0</td><td>Proxied at <code>/shuffle/</code> from unmodified GHCR images (digests pinned in <code>docker-compose.security.yml</code>). UI/API on loopback only.</td></tr>
+        <tr><td>MongoDB 4.4</td><td>SSPL-1.0</td><td>Private Shuffle dependency only — <strong>not</strong> exposed to users; no published host ports.</td></tr>
+        <tr><td>OpenSearch (Shuffle)</td><td>Apache-2.0</td><td>Shuffle search backend (internal network)</td></tr>
+        <tr><td>Wazuh stack</td><td>GPLv2 (components)</td><td>Proxied at <code>/wazuh/</code>; separate upstream containers</td></tr>
+    </tbody>
+</table>
+
+<h4 class="notice-heading" id="agpl-source">AGPL source offer (Grafana &amp; Shuffle)</h4>
+<p>
+    Hayabusa runs <strong>unmodified</strong> upstream Grafana and Shuffle container images and proxies them after login.
+    We do <strong>not</strong> ship patched Grafana/Shuffle program source in this product.
+    Charging for Hayabusa (including features that use these tools) is permitted under AGPL; AGPL applies to
+    <em>Grafana</em> and <em>Shuffle</em> themselves, not to Hayabusa’s separate proprietary application code.
+</p>
+<p>
+    <strong>Corresponding Source</strong> for the AGPL programs we operate is available from upstream (and on request):
+</p>
+<table class="notice-table">
+    <thead>
+        <tr><th>Program</th><th>Version / pin</th><th>License</th><th>Corresponding Source</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Grafana</strong></td>
+            <td><code>grafana/grafana:11.2.2</code></td>
+            <td>AGPL-3.0</td>
+            <td>
+                <a href="https://github.com/grafana/grafana/tree/v11.2.2" target="_blank" rel="noopener">github.com/grafana/grafana @ v11.2.2</a> ·
+                <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="noopener">AGPL-3.0 text</a>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Shuffle backend</strong></td>
+            <td>GHCR digest <code>sha256:d4a5d2bf1f956955b68b099ba1c38997e4b257b2518215e0427f433515bea5c8</code></td>
+            <td>AGPL-3.0</td>
+            <td>
+                <a href="https://github.com/Shuffle/Shuffle" target="_blank" rel="noopener">github.com/Shuffle/Shuffle</a> ·
+                match image digest in compose ·
+                <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="noopener">AGPL-3.0 text</a>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Shuffle frontend</strong></td>
+            <td>GHCR digest <code>sha256:4d700a6f0822cb081822bd2fa6c633080553bdd4313aed2c4bdce75b87e82836</code></td>
+            <td>AGPL-3.0</td>
+            <td>
+                <a href="https://github.com/Shuffle/Shuffle" target="_blank" rel="noopener">github.com/Shuffle/Shuffle</a> ·
+                match image digest in compose
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p style="font-size:0.9rem;">
+    If upstream links are unavailable (air-gap) or you need a source bundle for the exact tags/digests on your deployment,
+    contact <a href="mailto:support@tracedroute.net">support@tracedroute.net</a> and reference your Hayabusa image / compose tag.
+    Operator helper: <code>scripts/gpl-source-offer.sh</code> (lists Grafana/Shuffle/Mongo source pointers as well).
+    Full file: download <code>THIRD_PARTY_NOTICES.md</code> below.
+</p>
+
+<h4 class="notice-heading">DevOps &amp; infrastructure</h4>
+<table class="notice-table">
+    <thead>
+        <tr><th>Component</th><th>Typical license</th><th>In Hayabusa</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Ansible (ansible-core)</td><td>GPL-3.0-or-later</td><td>Playbooks, inventory, ZTP / Craft</td></tr>
+        <tr><td>OpenTofu (<code>tofu</code>)</td><td>MPL-2.0</td><td><code>OpenTofu/</code>, state sync</td></tr>
+        <tr><td>dnsmasq</td><td>GPL-2.0+</td><td>ZTP DHCP / leases</td></tr>
+        <tr><td>Pixiecore</td><td>Apache-2.0 (upstream)</td><td>ProxyDHCP / PXE</td></tr>
+    </tbody>
+</table>
+<p>
+    <strong>Terraform®</strong> is a trademark of HashiCorp. Hayabusa uses <strong>OpenTofu</strong> for infrastructure-as-code.
+</p>
+
+<h4 class="notice-heading">GPL source (we ship binaries; get source here)</h4>
+<p>
+    Hayabusa images include GPL packages such as <strong>strongSwan</strong> (IPsec), <strong>ansible-core</strong>,
+    <strong>dnsmasq</strong>, <strong>ClamAV</strong>, and <strong>FFmpeg</strong>.
+    Matching source is available from Ubuntu and upstream projects — we direct you to those sources rather than bundling tarballs in the image.
+</p>
+<table class="notice-table">
+    <thead>
+        <tr><th>Package</th><th>Reference version</th><th>Source</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>strongSwan</strong></td>
+            <td>5.9.5-2ubuntu2.8</td>
+            <td>
+                <a href="https://packages.ubuntu.com/source/jammy/strongswan" target="_blank" rel="noopener">Ubuntu source (Jammy)</a> ·
+                <a href="https://github.com/strongswan/strongswan" target="_blank" rel="noopener">GitHub</a> ·
+                <code>apt-get source strongswan=5.9.5-2ubuntu2.8</code>
+            </td>
+        </tr>
+        <tr>
+            <td>ansible-core</td>
+            <td>2.17.14-1ppa~jammy</td>
+            <td><a href="https://launchpad.net/~ansible/+archive/ubuntu/ansible" target="_blank" rel="noopener">Ansible PPA</a> · <code>apt-get source ansible-core</code></td>
+        </tr>
+        <tr>
+            <td>dnsmasq</td>
+            <td>2.91-0ubuntu0.22.04.1</td>
+            <td>
+                <a href="https://packages.ubuntu.com/source/jammy/dnsmasq" target="_blank" rel="noopener">Ubuntu source (Jammy)</a> ·
+                <code>apt-get source dnsmasq</code>
+            </td>
+        </tr>
+        <tr>
+            <td>ClamAV</td>
+            <td>0.103.12+dfsg-0ubuntu0.22.04.1</td>
+            <td><a href="https://packages.ubuntu.com/source/jammy/clamav" target="_blank" rel="noopener">Ubuntu source</a> · <a href="https://www.clamav.net/" target="_blank" rel="noopener">clamav.net</a></td>
+        </tr>
+        <tr>
+            <td>FFmpeg</td>
+            <td>7:4.4.2-0ubuntu0.22.04.1</td>
+            <td><a href="https://packages.ubuntu.com/source/jammy/ffmpeg" target="_blank" rel="noopener">Ubuntu source</a> · <a href="https://ffmpeg.org/" target="_blank" rel="noopener">ffmpeg.org</a></td>
+        </tr>
+    </tbody>
+</table>
+<p style="font-size:0.9rem;">
+    Confirm versions in your container: <code>dpkg -l strongswan ansible-core dnsmasq clamav ffmpeg</code>.
+    Full text and other licenses: download <code>THIRD_PARTY_NOTICES.md</code> below.
+</p>
+
+<h4 class="notice-heading">Vendor names (routers, switches, firewalls)</h4>
+<p>
+    Labels such as <strong>Cisco</strong>, <strong>Juniper</strong>, <strong>Arista</strong>, <strong>Palo Alto Networks</strong>,
+    <strong>Fortinet</strong>, <strong>HPE</strong>, <strong>Aruba</strong>, <strong>Ubiquiti</strong>, <strong>MikroTik</strong>,
+    <strong>VMware</strong>, and <strong>Proxmox</strong> are <strong>trademarks of their respective owners</strong>.
+    Hayabusa uses them only to describe device categories, ZTP recipes, OUI/DHCP hints, and playbook targets in your lab.
+</p>
+<p>
+    Hayabusa is <strong>not affiliated with or endorsed by</strong> those vendors unless you have a separate agreement.
+    OUI vendor strings come from <strong>ieee-data</strong> (IEEE public listings) for identification only.
+</p>
+
+<h4 class="notice-heading">Authorized use only</h4>
+<p>
+    Open-source licenses permit use and redistribution of the <em>software</em> under their terms.
+    They do <strong>not</strong> authorize scanning or attacking systems without permission from the owner.
+</p>
+
+<p class="notice-disclaimer">
+    This information is for transparency and is not legal advice. Consult qualified counsel for your product and distribution model.
+    Full text: <code>THIRD_PARTY_NOTICES.md</code> in the Hayabusa distribution (download below).
+</p>
+
+            </div>
+            <p style="margin-top:1rem;font-size:0.92rem;color:var(--text-muted);">
+                Standalone page: <a href="docs/THIRD_PARTY_NOTICES.md">/open-source-notices</a>
+            </p>
+        </section>
+    </main>
+</div>
+
+<div id="footer-wrapper">
+    <div class="container">
+        <p><i class="fa fa-feather-alt"></i> Hayabusa Network Engine - Complete Documentation</p>
+        <p style="margin-top:0.35rem;font-size:0.92rem;">
+            Support:
+            <a href="https://service.tracedroute.net/support/" style="color:inherit;">in-app tickets</a>
+            ·
+            <a href="mailto:support@tracedroute.net" style="color:inherit;">support@tracedroute.net</a>
+        </p>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function showSection(sectionId) {
+        var targetId = (sectionId || '').replace('#', '');
+        if (!targetId) targetId = 'intro';
+        $('.doc-section').addClass('hidden');
+        var target = $('#' + targetId);
+        if (target.length === 0) {
+            target = $('#intro');
+            targetId = 'intro';
+        }
+        target.removeClass('hidden');
+        $('.nav-item').removeClass('active');
+        $('.nav-item[href="#' + targetId + '"]').addClass('active');
+        window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+
+    $(document).ready(function () {
+        $('#searchDocs').on('input', function () {
+            var query = $(this).val().toLowerCase();
+            $('.nav-item').each(function () {
+                var text = $(this).text().toLowerCase();
+                $(this).toggle(text.indexOf(query) !== -1);
+            });
+        });
+
+        $('.nav-item').on('click', function (e) {
+            e.preventDefault();
+            var id = ($(this).attr('href') || '').replace('#', '');
+            showSection(id);
+            if (history && history.replaceState) {
+                history.replaceState(null, '', '#' + id);
+            }
+        });
+
+        var initial = (window.location.hash || '#intro').replace('#', '');
+        showSection(initial);
+    });
+</script>
+</body>
+</html>
