@@ -319,9 +319,9 @@
         </div>
         <a class="nav-item" href="#fleet">5. Fleet</a>
         <div class="toc-sub">
-            <a class="nav-item" href="#guacamole-console">5.1 "Incoming"</a>
-            <a class="nav-item" href="#guacamole-console">5.1 "Network Console"</a>
-            <a class="nav-item" href="#guacamole-console">5.1 "Embedded Views"</a>
+            <a class="nav-item" href="#Incoming-console">5.1 Incoming</a>
+            <a class="nav-item" href="#Incoming-console">5.1 Network Console"</a>
+            <a class="nav-item" href="#Incoming-console">5.1 Embedded Views</a>
         </div>
         <a class="nav-item" href="#networking">6. Networking</a>
         <div class="toc-sub">
@@ -517,32 +517,22 @@
             <ul>
                 <li>Segmenting rollout groups and comparing posture across many nodes.</li>
                 <li>Claiming Incoming devices after controller discovery / ZTP seek.</li>
-                <li>Opening a host console (Guacamole) or PLC Viewer without leaving Fleet.</li>
                 <li>Running approved Ansible/OpenTofu jobs against scoped targets after LAN Approve when a controller holds secrets/media.</li>
             </ul>
             <div class="box note"><strong>Relationship to Workstations:</strong> Workstations is the clearer map-first view; Fleet is the craft and inventory command surface. Use both — map for orientation, Fleet for action.</div>
         </section>
 
-                <section id="guacamole-console" class="doc-section">
+                <section id="Incoming-console" class="doc-section">
             <h4>5.1) "Incoming"</h4>
             <p>Zero-touch provisioning allows a view of hosts "calling out" via certain ports and protocols for their first-time configuration. This allows users to see the hosts calling out, recognize which vendor and model the instance is, and provide it a "recipe" or first-time configuration if it's not already applied.</p>
             <h4>How to use it</h4>
             <ol>
                 <li>Open <strong>Fleet</strong> and select the target host.</li>
                 <li>Open the host console action.</li>
-                <li>Use <strong>Apache Guacamole</strong> for the remote session.</li>
+                <li>Use <strong>Apache Incoming</strong> for the remote session.</li>
                 <li>Switch to <strong>PLC Viewer</strong> when you need controller protocol work.</li>
             </ol>
-            <h4>Runtime pieces</h4>
-            <ul>
-                <li><code>guacd</code> — Guacamole proxy daemon.</li>
-                <li><code>guacamole</code> — web client service.</li>
-                <li><code>guacamole-db</code> — PostgreSQL store initialized by Hayabusa SQL.</li>
-                <li><code>/api/console/guacamole/status</code> — UI status endpoint.</li>
-            </ul>
-            <p>On typical site installs, Guacamole runs beside the <strong>Hayabusa Controller</strong> stack so browser sessions reach LAN hosts without exposing every management port to the public internet.</p>
-            <div class="box warn"><strong>Credential handling:</strong> supply Guacamole and DB secrets via runtime environment — do not bake production credentials into images. Prefer least-privilege service accounts for SSH/RDP targets.</div>
-        </section>
+
 
                 <section id="networking" class="doc-section">
             <h3>6) Networking</h3>
@@ -695,37 +685,30 @@
 
                 <section id="integrations" class="doc-section">
             <h3>9) Integrations</h3>
-            <p>Integrations connect Hayabusa to outside services and workflows — chat login providers, Git (GitOps), observability backends, Guacamole, vendor ZTP, and optional AI providers. Every integration should have an owner, expected behavior, and a rollback plan.</p>
+            <p>Integrations connect Hayabusa to outside services and workflows — chat login providers, Git (GitOps), observability backends, Incoming, vendor ZTP, and optional AI providers. Every integration should have an owner, expected behavior, and a rollback plan.</p>
             <div class="box note"><strong>Integration Builder ↔ controller:</strong> webhooks, custom builder apps, and automation jobs save on Core and sync to the selected controller with <code>POST /api/my-controller/integrations/sync</code> (pull then push of <code>integrations.bundle.*</code>). The Integrations UI Sync button uses that path; builder app upserts also best-effort push so the site appliance keeps the same bundle.</div>
             <h4>Common integration families</h4>
             <ul>
                 <li><strong>Identity</strong> — Google, Slack, Discord, Microsoft sign-in (Core).</li>
-                <li><strong>GitOps</strong> — GitHub/GitLab as source of truth for Advanced controller workspaces (webhook/sync → push to controller).</li>
-                <li><strong>Secrets &amp; approve</strong> — controller vault names only (<code>{{ hayabusa_secret:KEY }}</code> or <code>&lt;&lt;SECRET:KEY&gt;&gt;</code>); values hydrate on LAN Approve.</li>
-                <li><strong>Remote access</strong> — Apache Guacamole for browser SSH/RDP/VNC.</li>
-                <li><strong>Telemetry</strong> — Grafana, Prometheus, InfluxDB proxies under Core paths.</li>
-                <li><strong>AI keys</strong> — user-scoped keys in Profile (see AI section).</li>
             </ul>
-            <p>Use integrations to reduce manual handoffs, but keep failure paths explicit: if Git is down, know how Novice/local workspace continues; if Guacamole is down, know break-glass SSH on the underlay.</p>
         </section>
 
         <section id="ai" class="doc-section">
             <h3>10) AI and User Keys</h3>
-            <p>Hayabusa supports user-scoped AI keys for assistant functionality. Store keys per user and treat them as sensitive credentials.</p>
+            <p>Hayabusa supports user-scoped AI keys for assistant functionality. Store keys in your controller and use the SECRET NAMES on Hayabusa core. Never put secrets on Hayabusa core.</p>
             <ul>
                 <li>Use least-privilege keys where possible.</li>
                 <li>Avoid sending secrets in prompts.</li>
                 <li>Validate AI outputs before operational use.</li>
             </ul>
             <h4>What the embedded AI helper now understands</h4>
-            <p>The floating Hayabusa AI Assistant is aware of the main operating surfaces and should guide users to the correct page, tab, and safety boundary. It can explain Workstations map views, the Ansible/OpenTofu console and Graphical View, tenant-scoped <code>openPLC/</code> directories, Apache Guacamole consoles, Observability, SCADA/PLC workflows, ROS2 robotics tooling, ZTP/controller roles, and Image Nest deploy targets.</p>
+            <p>The floating Hayabusa AI Assistant is aware of the main operating surfaces and should guide users to the correct page, tab, and safety boundary. It can explain Workstations map views, the Ansible/OpenTofu console and Graphical View, tenant-scoped <code>openPLC/</code> directories, Apache Incoming consoles, Observability, SCADA/PLC workflows, ROS2 robotics tooling, ZTP/controller roles, and Image Nest deploy targets.</p>
             <h4>Recommended prompts</h4>
             <ul>
                 <li>"Show me how to switch from my personal observability view to my organization Grafana view."</li>
                 <li>"How do I upload an OpenPLC project folder into the Graphical View?"</li>
                 <li>"Which PLC protocols can I read or write from the PLC Viewer, and what safety checks apply?"</li>
                 <li>"Where do I find the Robotics Viewer and what ROS2 tools are installed?"</li>
-                <li>"How do I open a host through Apache Guacamole from Fleet?"</li>
             </ul>
             <div class="box note"><strong>AI safety expectation:</strong> the helper can explain and draft steps, but operators must verify identity scope, organization scope, target host/controller, and authorization before running commands or writing PLC values.</div>
         </section>
@@ -851,7 +834,7 @@
             <p>The Robotics Viewer is Hayabusa's native ground-control station for licensed-safe drone operations without bundling Qt/QGroundControl or GPL Mission Planner. It includes a drone world map for ownship MAVLink position, ADS-B aircraft decoded by dump1090, and Remote ID drone tracks ingested from an OpenDroneID/DroneScanner-style bridge. It is designed for tenant-scoped telemetry, operator safety gates, audit logs, and browser-native mission/control workflows.</p>
             <ul>
                 <li><strong>Native flight deck:</strong> Hayabusa supports flight mode changes, parameter fetch/edit, command ACK display, mission download, mission clear, guarded <code>goto</code>, and guarded waypoint mission upload through the active MAVLink helper.</li>
-                <li><strong>Optional QGroundControl / Mission Planner:</strong> Hayabusa can still store tenant-scoped launcher URLs for external or Guacamole-hosted ground-station desktops. These are optional compatibility tools, not bundled dependencies. QGroundControl requires Qt licensing care; Mission Planner is GPLv3 and should remain external/separate.</li>
+                <li><strong>Optional QGroundControl / Mission Planner:</strong> Hayabusa can still store tenant-scoped launcher URLs for external or Incoming-hosted ground-station desktops. These are optional compatibility tools, not bundled dependencies. QGroundControl requires Qt licensing care; Mission Planner is GPLv3 and should remain external/separate.</li>
                 <li><strong>dump1090 / RTL-SDR:</strong> the container includes <code>rtl-sdr</code> and <code>dump1090-mutability</code> where installed. Hayabusa can start/stop a tenant-scoped dump1090 background receiver bound to loopback, reads its aircraft JSON, and plots decoded ADS-B aircraft.</li>
                 <li><strong>OpenDroneID / DroneScanner / OpenSpyglass-style Remote ID:</strong> Hayabusa exposes a tenant-scoped ingest endpoint for decoded Remote ID tracks. A local bridge process can listen on an Alfa Wi-Fi card or Bluetooth receiver, decode Remote ID packets, and POST normalized track JSON into Hayabusa.</li>
                 <li><strong>Safety controls:</strong> writes such as mode changes, parameter edits, mission clear, <code>goto</code>, arm/takeoff/land/RTL, and mission upload require explicit authorization and confirmation text.</li>
@@ -1037,7 +1020,7 @@
             <p>Know which controls survive restarts and which are session-derived. Some diagnostics (immediate baseline compare, transient path highlights) are intentionally runtime-scoped for speed. If compliance needs durable history, add explicit storage policy rather than assuming every visualization is persisted.</p>
             <h4>Examples</h4>
             <ul>
-                <li><strong>Persists</strong> — org memberships, tenant CIDRs, Image Nest bank on the controller volume, Guacamole DB, Grafana orgs/datasources (as provisioned).</li>
+                <li><strong>Persists</strong> — org memberships, tenant CIDRs, Image Nest bank on the controller volume, Grafana orgs/datasources (as provisioned).</li>
                 <li><strong>Session / ephemeral</strong> — browser session cookies, some map overlays, in-memory baselines.</li>
             </ul>
         </section>
@@ -1128,7 +1111,7 @@
             <ul>
                 <li><strong>Make scope explicit</strong> before every change (user vs org, site vs lab).</li>
                 <li><strong>Prefer staged rollouts</strong> over broad immediate actions; use OpenTofu plans and Ansible check modes where available.</li>
-                <li><strong>Least privilege</strong> for accounts, org roles, AI keys, and Guacamole credentials.</li>
+                <li><strong>Least privilege</strong> for accounts, org roles, AI keys, and all credentials.</li>
                 <li><strong>Placeholders only in git</strong> — prefer <code>{{ hayabusa_secret:KEY }}</code> or <code>&lt;&lt;SECRET:KEY&gt;&gt;</code> (plus <code>&lt;&lt;IMAGE_NEST:…&gt;&gt;</code>); hydrate on LAN Approve.</li>
                 <li><strong>Auditability by default</strong> — who changed what, when, and why.</li>
                 <li><strong>Environment-specific runbooks</strong> — this manual is general; your CIDRs, change windows, and owners are local.</li>
@@ -1180,7 +1163,7 @@
 
         <section id="about" class="doc-section">
             <h3>23) About</h3>
-            <p>Hayabusa is an infrastructure command center built around open-source building blocks — Ansible, OpenTofu, WireGuard/Headscale, Guacamole, Grafana/Prometheus/Influx, OpenPLC, ROS2/MAVLink tooling, and more — with a unified identity, network, and governance model for individuals and organizations.</p>
+            <p>Hayabusa is an infrastructure command center built around open-source building blocks — Ansible, OpenTofu, WireGuard/Headscale, Grafana/Prometheus/Influx, OpenPLC, ROS2/MAVLink tooling, and more — with a unified identity, network, and governance model for individuals and organizations.</p>
             <p>The platform is designed so you may never use every surface. Start from onboarding (§3), learn Ansible/OpenTofu (§4.2), then deepen into the categories that match your role (networking, ZTP/Nest, observability, SCADA/robotics, admin).</p>
             <p>For reusable packs built on top of Hayabusa, see <a href="#derivatives">§22 Derivatives</a>. For bundled component licenses, see <a href="#open-source-notices">§24 Open Source notices</a>.</p>
         </section>
