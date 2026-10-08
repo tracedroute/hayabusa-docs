@@ -1109,6 +1109,8 @@
                 <section id="best-practices" class="doc-section">
             <h3>20) Best Practices</h3>
             <ul>
+                <li><strong>Separate hosts (using Opentofu) and their data (Ansible)</strong> to facilitate easy recreation, replication, and to protect against user error.</li>
+                <li><strong>Test before deploying</strong> Consider testing scripts before deploying. You can always put a controller in a test environment to test on low-risk hosts first.</li>
                 <li><strong>Make scope explicit</strong> before every change (user vs org, site vs lab).</li>
                 <li><strong>Prefer staged rollouts</strong> over broad immediate actions; use OpenTofu plans and Ansible check modes where available.</li>
                 <li><strong>Least privilege</strong> for accounts, org roles, AI keys, and all credentials.</li>
